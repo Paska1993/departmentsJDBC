@@ -2,12 +2,16 @@ package models;
 
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
  * Created by pavel on 22.04.15.
  */
+@Entity
+@Table(name = "employee")
 public class Employee {
     private Integer id;
 
@@ -39,6 +43,19 @@ public class Employee {
     @NotNull(message = "Email: is empty")
     private String email;
 
+
+    @ManyToOne
+    @JoinColumn(name="department_id")
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public Employee(){
 
     }
@@ -64,6 +81,10 @@ public class Employee {
         this.name = name;
     }
 
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name="employee_id")
     public Integer getId() {
 
         return id;
@@ -89,6 +110,7 @@ public class Employee {
         this.id = id;
     }
 
+    @Column(name="email")
     public String getEmail() {
         return email;
     }
@@ -97,6 +119,7 @@ public class Employee {
         this.email = email;
     }
 
+    @Column(name="birthday")
     public Date getBirthday() {
         return birthday;
     }
@@ -105,6 +128,7 @@ public class Employee {
         this.birthday = birthday;
     }
 
+    @Column(name="department_id")
     public Integer getDepartment_id() {
         return department_id;
     }
@@ -113,6 +137,7 @@ public class Employee {
         this.department_id = department_id;
     }
 
+    @Column(name="address")
     public String getAddress() {
         return address;
     }
@@ -121,6 +146,7 @@ public class Employee {
         this.address = address;
     }
 
+    @Column(name="salary")
     public Double getSalary() {
         return salary;
     }
@@ -129,6 +155,7 @@ public class Employee {
         this.salary = salary;
     }
 
+    @Column(name="surname")
     public String getSurname() {
         return surname;
     }
@@ -137,6 +164,7 @@ public class Employee {
         this.surname = surname;
     }
 
+    @Column(name="name")
     public String getName() {
         return name;
     }
