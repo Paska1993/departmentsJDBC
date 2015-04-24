@@ -1,0 +1,33 @@
+.edit{
+    width: 400px;
+    margin-top: 20%;
+    margin-left: 40%;
+    height: 1000px;
+    float: initial;
+
+}
+
+.add{
+    width: 50px;
+    float: right;
+}
+
+.cancel{
+    width: 80px;
+    margin-left: 60%;
+}
+
+.errorMessage{
+
+    width: 250px;
+    height: 300px;
+    float: right;
+    margin-left: 20px;
+    margin-right: 15%;
+
+}
+
+.form-group{
+
+    height: 30px;
+}

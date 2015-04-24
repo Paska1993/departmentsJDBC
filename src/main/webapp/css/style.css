@@ -1,0 +1,13 @@
+.header {
+    align-content: center;
+    margin-bottom: 30px;
+}
+
+.span2{
+    width: 300px;
+    float: left;
+}
+.span10{
+    width: 1200px;
+    margin-left: 310px;
+}

@@ -1,0 +1,16 @@
+.edit{
+    width: 400px;
+    height: 300px;
+    margin-top: 20%;
+    margin-left: 40%;
+}
+
+.add{
+    width: 50px;
+    float: right;
+}
+
+.cancel{
+    width: 80px;
+    margin-left: 60%;
+}
