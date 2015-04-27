@@ -1,9 +1,9 @@
-package controllers.hendlers.employeeHandlers;
+package controllers.handlers.employeeHandlers;
 
-import controllers.hendlers.EmployeesHandle;
-import controllers.hendlers.creators.EmployeeFromRequest;
+import controllers.handlers.EmployeesHandle;
+import dao.departmentDAO.DepartmentDAO;
+import dao.departmentDAO.jdbc.DepartmentJDBCImpl;
 import dao.employeeDAO.EmployeeDAO;
-import models.Employee;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,26 +13,27 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Created by pavel on 23.04.15.
+ * Created on 24.04.15.
  */
-public class DeleteEmployeeHandler implements EmployeesHandle {
+public class DepartmentsForAddHandler implements EmployeesHandle{
 
     private final String DriverException = "You probably will never see this message, " +
             "but if it`s happen you must to know that you have not jdbc.mysql.Driver!";
     private final String DatabaseException = "We have some trouble with Database, sorry for that!";
 
     public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException {
-        Employee employee = EmployeeFromRequest.createEmployeeID(request);
         try {
-            employeeDAO.deleteEmployee(employee);
-            RequestDispatcher rd = request.getRequestDispatcher("employees.html");
-            rd.forward(request, response);
-        } catch (SQLException e) {
-            request.setAttribute("errorMessage",DatabaseException);
-            RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+            DepartmentDAO departmentDAO = new DepartmentJDBCImpl();
+            departmentDAO.getAllDepartments();
+            request.setAttribute("departments", departmentDAO.getAll());
+            RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
             rd.forward(request, response);
         } catch (ClassNotFoundException e) {
             request.setAttribute("errorMessage",DriverException);
+            RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+            rd.forward(request, response);
+        } catch (SQLException e) {
+            request.setAttribute("errorMessage",DatabaseException);
             RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
             rd.forward(request, response);
         }

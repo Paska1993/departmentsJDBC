@@ -9,12 +9,15 @@
         <property name="connection.password">1</property>
         <property name="connection.pool_size">10</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!--MySQLInnoDBDialect-->
         <property name="show_sql">true</property>
-        <!--<property name="hbm2ddl.auto">create</property>-->
+        <property name="hbm2ddl.auto">validate</property>
         <property name="hibernate.connection.autocommit">false</property>
         <property name="current_session_context_class">thread</property>
 
-        <mapping class="models.Department"></mapping>
-        <mapping class="models.Employee"></mapping>
+       <!-- <mapping class="models.Employee" />-->
+        <mapping class="models.Department" />
+        <mapping class="models.hibernateImpl.EmployeeH" />
+
     </session-factory>
 </hibernate-configuration>

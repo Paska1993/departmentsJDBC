@@ -1,9 +1,9 @@
 package controllers;
 
-import controllers.hendlers.DepartmentsHandle;
-import controllers.hendlers.departmentHandlers.*;
+import controllers.handlers.DepartmentsHandle;
+import controllers.handlers.departmentHandlers.*;
 import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImplementation;
+import dao.departmentDAO.hibernate.DepartmentHibernateImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +18,9 @@ import java.util.Map;
 /**
  * Created by pavel on 22.04.15.
  */
-@WebServlet(name = "ManagerDepartmentServlet", urlPatterns = {"/index.html" , "/get_chosen_department.html",
+@WebServlet(name = "DispatcherServlet", urlPatterns = {"/index.html" , "/get_chosen_department.html",
         "/department_edit.html", "/add_department.html", "/department_delete.html"})
-public class ManagerDepartmentServlet extends HttpServlet {
+public class DispatcherServlet extends HttpServlet {
 
     private static final Map<String, DepartmentsHandle> handlers = new HashMap();
     @Override
@@ -30,13 +30,14 @@ public class ManagerDepartmentServlet extends HttpServlet {
         handlers.put("/department_edit.html", new EditDepartmentHandler());
         handlers.put("/add_department.html", new AddDepartmentHandler());
         handlers.put("/department_delete.html", new DeleteDepartmentHandler());
+
     }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getRequestURI().substring(req.getContextPath().length());
         DepartmentsHandle handler = handlers.get(path);
-        DepartmentDAO departmentDAO = new DepartmentJDBCImplementation();
+        DepartmentDAO departmentDAO = new DepartmentHibernateImpl(); /*new DepartmentJDBCImpl();*/
         handler.handle(req, resp, departmentDAO);
     }
 }

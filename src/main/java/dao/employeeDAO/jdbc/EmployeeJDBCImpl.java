@@ -1,7 +1,6 @@
 package dao.employeeDAO.jdbc;
 
 import dao.employeeDAO.EmployeeDAO;
-import models.Department;
 import models.Employee;
 
 import java.sql.*;
@@ -11,7 +10,7 @@ import java.util.List;
 /**
  * Created by pavel on 22.04.15.
  */
-public class EmployeeJDBCImplementation implements EmployeeDAO {
+public class EmployeeJDBCImpl implements EmployeeDAO {
 
     private final String URL = "jdbc:mysql://localhost/departments";
     private final String NAME = "root";
@@ -28,7 +27,7 @@ public class EmployeeJDBCImplementation implements EmployeeDAO {
     private final String ADD_QUERY = "INSERT INTO employee(name,surname,salary,address,department_id,birthday,email) " +
             "VALUES(?,? ,? ,?, ?, ?, ?)";
 
-    public EmployeeJDBCImplementation(){
+    public EmployeeJDBCImpl(){
         this.employees = new ArrayList<Employee>();
     }
 

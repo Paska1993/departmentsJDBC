@@ -1,8 +1,7 @@
-package controllers.hendlers.departmentHandlers;
+package controllers.handlers.departmentHandlers;
 
-import controllers.hendlers.DepartmentsHandle;
+import controllers.handlers.DepartmentsHandle;
 import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImplementation;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

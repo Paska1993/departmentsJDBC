@@ -1,4 +1,4 @@
-package controllers.hendlers.creators;
+package controllers.handlers.creators;
 
 import models.Department;
 

@@ -1,9 +1,7 @@
-package controllers.hendlers.employeeHandlers;
+package controllers.handlers.employeeHandlers;
 
-import controllers.hendlers.EmployeesHandle;
-import controllers.hendlers.creators.EmployeeFromRequest;
-import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImplementation;
+import controllers.handlers.EmployeesHandle;
+import controllers.handlers.creators.EmployeeFromRequest;
 import dao.employeeDAO.EmployeeDAO;
 import exception.EmailFormatException;
 import exception.EmployeeNullFieldsException;
@@ -22,46 +20,37 @@ import java.sql.SQLException;
 /**
  * Created by pavel on 23.04.15.
  */
-public class AddEmployeeHandler implements EmployeesHandle {
+public class EditEmployeeHandler implements EmployeesHandle {
 
     private final String DriverException = "You probably will never see this message, " +
             "but if it`s happen you must to know that you have not jdbc.mysql.Driver!";
     private final String DatabaseException = "We have some trouble with Database, sorry for that!";
 
-    public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException, SQLException, ClassNotFoundException {
-        Employee employee = EmployeeFromRequest.createEmployee(request);
-        DepartmentDAO departmentDAO = new DepartmentJDBCImplementation();
+    public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException {
+        Employee employee = EmployeeFromRequest.createEmployeeFull(request);
         try {
-            EmployeeService.service(employee, employeeDAO, true);
+            EmployeeService.service(employee, employeeDAO, false);
             RequestDispatcher rd = request.getRequestDispatcher("employees.html");
             rd.forward(request, response);
         } catch (EmployeeNullFieldsException e) {
-            departmentDAO.getAllDepartments();
-            request.setAttribute("departments", departmentDAO.getAll());
             request.setAttribute("employee", employee);
             request.setAttribute("errorMessage", e.getErrorMessage());
-            RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
-            rd.forward(request,response);
+            RequestDispatcher rd = request.getRequestDispatcher("edit_employee.jsp");
+            rd.forward(request, response);
         } catch (SameEmailException e) {
-            departmentDAO.getAllDepartments();
-            request.setAttribute("departments", departmentDAO.getAll());
             request.setAttribute("employee", employee);
             request.setAttribute("sameEmailError", "Employee with this email is already exist");
-            RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("edit_employee.jsp");
             rd.forward(request, response);
         } catch (EmailFormatException e) {
-            departmentDAO.getAllDepartments();
-            request.setAttribute("departments", departmentDAO.getAll());
             request.setAttribute("employee", employee);
             request.setAttribute("emailFormatError", "Email format is not correct");
-            RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("edit_employee.jsp");
             rd.forward(request, response);
         } catch (SalaryFormatException e) {
-            departmentDAO.getAllDepartments();
-            request.setAttribute("departments", departmentDAO.getAll());
             request.setAttribute("employee", employee);
             request.setAttribute("salaryError", "Salary cannot be less then 0");
-            RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("edit_employee.jsp");
             rd.forward(request, response);
         } catch (SQLException e) {
             request.setAttribute("errorMessage",DatabaseException);
@@ -72,6 +61,5 @@ public class AddEmployeeHandler implements EmployeesHandle {
             RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
             rd.forward(request, response);
         }
-
     }
 }

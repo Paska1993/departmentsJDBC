@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DepartmentDAO {
 
-    void getDepartmentById(Integer id) throws ClassNotFoundException, SQLException;
+    Department getDepartmentById(Integer id) throws ClassNotFoundException, SQLException;
     void addDepartment(Department department) throws ClassNotFoundException, SQLException;
     void deleteDepartment(Department department) throws ClassNotFoundException, SQLException;
     void updateDepartment(Department department) throws ClassNotFoundException, SQLException;

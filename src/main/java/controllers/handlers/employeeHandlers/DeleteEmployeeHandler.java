@@ -1,7 +1,9 @@
-package controllers.hendlers.employeeHandlers;
+package controllers.handlers.employeeHandlers;
 
-import controllers.hendlers.EmployeesHandle;
+import controllers.handlers.EmployeesHandle;
+import controllers.handlers.creators.EmployeeFromRequest;
 import dao.employeeDAO.EmployeeDAO;
+import models.Employee;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +13,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Created by pavel on 22.04.15.
+ * Created by pavel on 23.04.15.
  */
-public class EmployeeListHandler implements EmployeesHandle {
+public class DeleteEmployeeHandler implements EmployeesHandle {
 
     private final String DriverException = "You probably will never see this message, " +
             "but if it`s happen you must to know that you have not jdbc.mysql.Driver!";
     private final String DatabaseException = "We have some trouble with Database, sorry for that!";
 
     public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException {
+        Employee employee = EmployeeFromRequest.createEmployeeID(request);
         try {
-            employeeDAO.getAllEmployee();
-            request.setAttribute("employees", employeeDAO.getAll());
-            RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");
+            employeeDAO.deleteEmployee(employee);
+            RequestDispatcher rd = request.getRequestDispatcher("employees.html");
             rd.forward(request, response);
         } catch (SQLException e) {
             request.setAttribute("errorMessage",DatabaseException);

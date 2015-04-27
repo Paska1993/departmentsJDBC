@@ -1,7 +1,6 @@
-package controllers.hendlers.departmentHandlers;
+package controllers.handlers.departmentHandlers;
 
-import controllers.hendlers.DepartmentsHandle;
-import controllers.hendlers.creators.DepartmentFromRequest;
+import controllers.handlers.DepartmentsHandle;
 import dao.departmentDAO.DepartmentDAO;
 import models.Department;
 
@@ -15,18 +14,20 @@ import java.sql.SQLException;
 /**
  * Created by pavel on 22.04.15.
  */
-public class DeleteDepartmentHandler implements DepartmentsHandle {
+public class GetChosenDepartmentHandler implements DepartmentsHandle {
 
     private final String DriverException = "You probably will never see this message, " +
             "but if it`s happen you must to know that you have not jdbc.mysql.Driver!";
     private final String DatabaseException = "We have some trouble with Database, sorry for that!";
 
     public void handle(HttpServletRequest request, HttpServletResponse response, DepartmentDAO departmentDAO) throws ServletException, IOException {
-        Department department = DepartmentFromRequest.createDepartment(request);
+        Department department = null;
         try {
-            departmentDAO.deleteDepartment(department);
-            RequestDispatcher rd = request.getRequestDispatcher("index.html");
-            rd.forward(request, response);
+            department = departmentDAO.getDepartmentById(Integer.valueOf(request.getParameter("id")));
+           // department = departmentDAO.getAll().get(0);
+            request.setAttribute("department",department);
+            RequestDispatcher rd = request.getRequestDispatcher("department_edit.jsp");
+            rd.forward(request,response);
         } catch (ClassNotFoundException e) {
             request.setAttribute("errorMessage",DriverException);
             RequestDispatcher rd = request.getRequestDispatcher("error.jsp");

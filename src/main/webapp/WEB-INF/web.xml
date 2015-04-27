@@ -7,7 +7,7 @@
 
   <display-name>Archetype Created Web Application</display-name>
    <!-- <servlet>
-        <servlet-name>ManagerDepartmentServlet</servlet-name>
+        <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>controllers.ManagerDepartmentServletentServlet</servlet-class>
     </servlet>-->
 </web-app>

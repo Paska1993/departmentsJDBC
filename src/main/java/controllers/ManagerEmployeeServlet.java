@@ -1,11 +1,10 @@
 package controllers;
 
-import controllers.hendlers.EmployeesHandle;
-import controllers.hendlers.employeeHandlers.*;
+import controllers.handlers.EmployeesHandle;
+import controllers.handlers.employeeHandlers.*;
 import dao.employeeDAO.EmployeeDAO;
-import dao.employeeDAO.jdbc.EmployeeJDBCImplementation;
+import dao.employeeDAO.hibernate.EmployeeHibernateImpl;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,17 +43,14 @@ public class ManagerEmployeeServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getRequestURI().substring(request.getContextPath().length());
         EmployeesHandle worker = handler.get(path);
-        EmployeeDAO employeeDAO = new EmployeeJDBCImplementation();
+        EmployeeDAO employeeDAO = new EmployeeHibernateImpl(); /*new EmployeeJDBCImpl();*/
+
         try {
             worker.handle(request, response, employeeDAO);
         } catch (SQLException e) {
-            request.setAttribute("errorMessage",DatabaseException);
-            RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
-            rd.forward(request, response);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            request.setAttribute("errorMessage",DriverException);
-            RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
-            rd.forward(request, response);
+            e.printStackTrace();
         }
     }
 }

@@ -1,6 +1,6 @@
-package controllers.hendlers.employeeHandlers;
+package controllers.handlers.employeeHandlers;
 
-import controllers.hendlers.EmployeesHandle;
+import controllers.handlers.EmployeesHandle;
 import dao.employeeDAO.EmployeeDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -11,21 +11,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Created by pavel on 23.04.15.
+ * Created by pavel on 22.04.15.
  */
-public class EmployeeByDepartmentIdHandler implements EmployeesHandle {
+public class EmployeeListHandler implements EmployeesHandle {
+
     private final String DriverException = "You probably will never see this message, " +
             "but if it`s happen you must to know that you have not jdbc.mysql.Driver!";
     private final String DatabaseException = "We have some trouble with Database, sorry for that!";
 
     public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException {
-        Integer department_id = Integer.valueOf(request.getParameter("id"));
         try {
-            employeeDAO.getEmployeesByDepartmentId(department_id);
+            employeeDAO.getAllEmployee();
             request.setAttribute("employees", employeeDAO.getAll());
             RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");
             rd.forward(request, response);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             request.setAttribute("errorMessage",DatabaseException);
             RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
             rd.forward(request, response);

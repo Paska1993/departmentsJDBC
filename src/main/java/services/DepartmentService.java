@@ -1,18 +1,13 @@
 package services;
 
 import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImplementation;
+import dao.departmentDAO.jdbc.DepartmentJDBCImpl;
 import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,7 +36,7 @@ public class DepartmentService {
     }
 
     private static boolean isEquals(Department department) throws SQLException, ClassNotFoundException {
-        DepartmentDAO dao = new DepartmentJDBCImplementation();
+        DepartmentDAO dao = new DepartmentJDBCImpl();
         dao.getAllDepartments();
         for(Department check : dao.getAll()){
             if(department.getName().equals(check.getName())){

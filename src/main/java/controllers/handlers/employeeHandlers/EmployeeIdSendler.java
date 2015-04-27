@@ -1,9 +1,8 @@
-package controllers.hendlers.employeeHandlers;
+package controllers.handlers.employeeHandlers;
 
-import controllers.hendlers.EmployeesHandle;
-import controllers.hendlers.creators.EmployeeFromRequest;
+import controllers.handlers.EmployeesHandle;
 import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImplementation;
+import dao.departmentDAO.jdbc.DepartmentJDBCImpl;
 import dao.employeeDAO.EmployeeDAO;
 import models.Employee;
 
@@ -25,7 +24,7 @@ public class EmployeeIdSendler implements EmployeesHandle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO) throws ServletException, IOException {
         try {
-            DepartmentDAO departmentDAO = new DepartmentJDBCImplementation();
+            DepartmentDAO departmentDAO = new DepartmentJDBCImpl();
             departmentDAO.getAllDepartments();
             employeeDAO.getEmployeeById(Integer.valueOf(request.getParameter("id")));
             Employee employee = employeeDAO.getAll().get(0);

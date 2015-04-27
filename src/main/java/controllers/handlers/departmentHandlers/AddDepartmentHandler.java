@@ -1,8 +1,7 @@
-package controllers.hendlers.departmentHandlers;
+package controllers.handlers.departmentHandlers;
 
-import controllers.hendlers.DepartmentsHandle;
-import controllers.hendlers.creators.DepartmentFromRequest;
-
+import controllers.handlers.DepartmentsHandle;
+import controllers.handlers.creators.DepartmentFromRequest;
 import dao.departmentDAO.DepartmentDAO;
 import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;

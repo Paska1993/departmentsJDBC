@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by pavel on 22.04.15.
  */
-public class DepartmentJDBCImplementation implements DepartmentDAO{
+public class DepartmentJDBCImpl implements DepartmentDAO{
 
     private final String URL = "jdbc:mysql://localhost/departments";
     private final String NAME = "root";
@@ -23,7 +23,7 @@ public class DepartmentJDBCImplementation implements DepartmentDAO{
     private final String UPDATE_QUERY = "UPDATE department SET department.name = ? WHERE department.id = ?";
     private final String ADD_QUERY = "INSERT INTO department(name)VALUES (?)";
 
-    public DepartmentJDBCImplementation(){
+    public DepartmentJDBCImpl(){
         this.departments = new ArrayList<Department>();
     }
 
@@ -32,15 +32,17 @@ public class DepartmentJDBCImplementation implements DepartmentDAO{
     }
 
 
-    public void getDepartmentById(Integer id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-        PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        createDepartmentFromResultSet(resultSet);
-        preparedStatement.close();
-        connection.close();
+    public Department getDepartmentById(Integer id) throws ClassNotFoundException, SQLException {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            createDepartmentFromResultSet(resultSet);
+            Department department = this.getAll().get(0);
+            preparedStatement.close();
+            connection.close();
+        return department;
     }
 
     public void addDepartment(Department department) throws ClassNotFoundException, SQLException {
