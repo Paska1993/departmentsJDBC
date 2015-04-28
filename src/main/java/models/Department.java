@@ -1,6 +1,5 @@
 package models;
 
-import models.hibernateImpl.EmployeeH;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,10 +20,10 @@ public class Department {
     @NotEmpty(message = "Field Name cannot be empty")
     private String name;
 
-    private Set<EmployeeH> employees;
+    private Set<Employee> employees;
 
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "department")
-    public Set<EmployeeH> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 

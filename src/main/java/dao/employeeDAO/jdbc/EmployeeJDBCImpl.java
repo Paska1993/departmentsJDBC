@@ -1,6 +1,7 @@
 package dao.employeeDAO.jdbc;
 
 import dao.employeeDAO.EmployeeDAO;
+import exception.DAOException;
 import models.Employee;
 
 import java.sql.*;
@@ -15,7 +16,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
     private final String URL = "jdbc:mysql://localhost/departments";
     private final String NAME = "root";
     private final String PASSWORD = "1";
-    private List <Employee> employees;
+    private List<Employee> employees;
 
     private final String GET_BY_ID = "SELECT * FROM employee WHERE employee.employee_id = ?";
     private final String GET_ALL_BY_ID_QUERY = "SELECT * FROM employee WHERE employee.department_id =?";
@@ -27,71 +28,161 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
     private final String ADD_QUERY = "INSERT INTO employee(name,surname,salary,address,department_id,birthday,email) " +
             "VALUES(?,? ,? ,?, ?, ?, ?)";
 
-    public EmployeeJDBCImpl(){
+    public EmployeeJDBCImpl() {
         this.employees = new ArrayList<Employee>();
     }
 
-    public void getEmployeeById(Integer id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-        PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID);
-        preparedStatement.setInt(1,id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        createEmployeeFromResultSet(resultSet);
-    }
-
-    public void getEmployeesByDepartmentId(Integer id) throws ClassNotFoundException, SQLException {
+    public Employee getEmployeeById(Integer id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BY_ID_QUERY);
-            preparedStatement.setInt(1,id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(GET_BY_ID);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
             createEmployeeFromResultSet(resultSet);
+            resultSet.close();
+            connection.close();
+            preparedStatement.close();
+            return this.getAll().get(0);
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                resultSet.close();
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void addEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY);
-            preparedStatement.setString(1, employee.getName());
-            preparedStatement.setString(2,employee.getSurname());
-            preparedStatement.setDouble(3, employee.getSalary());
-            preparedStatement.setString(4, employee.getAddress());
-            preparedStatement.setInt(5, employee.getDepartment_id());
-            preparedStatement.setDate(6, employee.getBirthday());
-            preparedStatement.setString(7, employee.getEmail());
-            preparedStatement.execute();
+
+
+    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(GET_ALL_BY_ID_QUERY);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            createEmployeeFromResultSet(resultSet);
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                resultSet.close();
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void deleteEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY);
-            preparedStatement.setInt(1, employee.getId());
-            preparedStatement.execute();
-    }
-
-    public void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+    public void addEmployee(Employee employee) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(ADD_QUERY);
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setDouble(3, employee.getSalary());
             preparedStatement.setString(4, employee.getAddress());
-            preparedStatement.setInt(5, employee.getDepartment_id());
+            //preparedStatement.setInt(5, employee.getDepartment_id());
+            preparedStatement.setDate(6, employee.getBirthday());
+            preparedStatement.setString(7, employee.getEmail());
+            preparedStatement.execute();
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
+    }
+
+    public void deleteEmployee(Employee employee) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(DELETE_QUERY);
+            preparedStatement.setInt(1, employee.getId());
+            preparedStatement.execute();
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
+    }
+
+    public void updateEmployee(Employee employee) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setString(2, employee.getSurname());
+            preparedStatement.setDouble(3, employee.getSalary());
+            preparedStatement.setString(4, employee.getAddress());
+           // preparedStatement.setInt(5, employee.getDepartment_id());
             preparedStatement.setDate(6, employee.getBirthday());
             preparedStatement.setString(7, employee.getEmail());
             preparedStatement.setInt(8, employee.getId());
             preparedStatement.execute();
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void getAllEmployee() throws ClassNotFoundException, SQLException {
+    public void getAllEmployee() throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
-            ResultSet rs =  preparedStatement.executeQuery();
-            createEmployeeFromResultSet(rs);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(GET_ALL_QUERY);
+            resultSet = preparedStatement.executeQuery();
+            createEmployeeFromResultSet(resultSet);
+        } catch (Throwable e) {
+            throw new DAOException();
+        } finally {
+            try {
+                resultSet.close();
+                connection.close();
+                preparedStatement.close();
+            }catch (Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
     public List<Employee> getAll() {
@@ -114,7 +205,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
             employee.setSurname(surname);
             employee.setSalary(salary);
             employee.setAddress(address);
-            employee.setDepartment_id(departments_id);
+           // employee.setDepartment_id(departments_id);
             employee.setBirthday(date_of_birth);
             employee.setEmail(email);
             this.employees.add(employee);

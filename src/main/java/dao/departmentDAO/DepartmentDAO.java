@@ -1,8 +1,8 @@
 package dao.departmentDAO;
 
+import exception.DAOException;
 import models.Department;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface DepartmentDAO {
 
-    Department getDepartmentById(Integer id) throws ClassNotFoundException, SQLException;
-    void addDepartment(Department department) throws ClassNotFoundException, SQLException;
-    void deleteDepartment(Department department) throws ClassNotFoundException, SQLException;
-    void updateDepartment(Department department) throws ClassNotFoundException, SQLException;
-    void getAllDepartments() throws ClassNotFoundException, SQLException;
+    Department getDepartmentById(Integer id) throws DAOException;
+    void addDepartment(Department department) throws DAOException;
+    void deleteDepartment(Department department) throws DAOException;
+    void updateDepartment(Department department) throws DAOException;
+    void getAllDepartments() throws DAOException;
     List<Department> getAll();
 
 }

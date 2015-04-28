@@ -17,7 +17,7 @@
 
        <!-- <mapping class="models.Employee" />-->
         <mapping class="models.Department" />
-        <mapping class="models.hibernateImpl.EmployeeH" />
+        <mapping class="models.Employee" />
 
     </session-factory>
 </hibernate-configuration>

@@ -1,11 +1,11 @@
 package dao.departmentDAO.hibernate;
 
 import dao.departmentDAO.DepartmentDAO;
+import exception.DAOException;
 import models.Department;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,8 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
         this.department = new ArrayList<Department>();
     }
 
-    public Department getDepartmentById(Integer id) throws ClassNotFoundException, SQLException {
+    public Department getDepartmentById(Integer id) throws DAOException {
+
         Session session = null;
         Department department = null;
         try {
@@ -28,7 +29,7 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
             department = (Department) session.get(Department.class, id);
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {
@@ -38,7 +39,7 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
         return department;
     }
 
-    public void addDepartment(Department department) throws ClassNotFoundException, SQLException {
+    public void addDepartment(Department department) throws DAOException {
 
         Session session = null;
         try {
@@ -48,17 +49,16 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
             session.getTransaction().commit();
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-
     }
 
-    public void deleteDepartment(Department department) throws ClassNotFoundException, SQLException {
+    public void deleteDepartment(Department department) throws DAOException {
 
         Session session = null;
         try {
@@ -68,7 +68,7 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
             session.getTransaction().commit();
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {
@@ -77,7 +77,7 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
         }
     }
 
-    public void updateDepartment(Department department) throws ClassNotFoundException, SQLException {
+    public void updateDepartment(Department department) throws DAOException {
 
         Session session = null;
         try {
@@ -87,17 +87,17 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
             session.getTransaction().commit();
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-
     }
 
-    public void getAllDepartments() throws ClassNotFoundException, SQLException {
+    public void getAllDepartments() throws DAOException {
+
         Session session = null;
         List<Department> dep;
         try {
@@ -106,7 +106,7 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
             this.department = dep;
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {

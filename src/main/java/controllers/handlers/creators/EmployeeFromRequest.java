@@ -19,7 +19,7 @@ public class EmployeeFromRequest {
         employee.setAddress(request.getParameter("address"));
         employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
-        employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
+        //employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
         return employee;
     }
@@ -38,7 +38,7 @@ public class EmployeeFromRequest {
         employee.setAddress(request.getParameter("address"));
         employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
-        employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
+       // employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
         return employee;
     }

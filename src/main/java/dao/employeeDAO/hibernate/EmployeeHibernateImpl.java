@@ -1,12 +1,12 @@
 package dao.employeeDAO.hibernate;
 
 import dao.employeeDAO.EmployeeDAO;
+import exception.DAOException;
 import models.Employee;
-import models.hibernateImpl.EmployeeH;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -17,41 +17,114 @@ public class EmployeeHibernateImpl implements EmployeeDAO {
     private List <Employee> employees;
 
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+
+    public Employee getEmployeeById(Integer id) throws DAOException {
+        Session session = null;
+        Employee employee = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            employee = (Employee) session.get(Employee.class, id);
+        }
+        catch (Exception e) {
+            throw new DAOException();
+        }
+        finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return employee;
     }
 
-    public void getEmployeeById(Integer id) throws ClassNotFoundException, SQLException {
+    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
 
-    }
-
-    public void getEmployeesByDepartmentId(Integer id) throws ClassNotFoundException, SQLException {
-
-    }
-
-    public void addEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-
-    }
-
-    public void deleteEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-
-    }
-
-    public void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException {
-
-    }
-
-    public void getAllEmployee() throws ClassNotFoundException, SQLException {
         Session session = null;
         List<Employee> employeeHList;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            employeeHList = (List<Employee>) session.createCriteria(EmployeeH.class).list();
+            Query query = session.createQuery("FROM Employee WHERE department.id = :dep_id");
+            query.setInteger("dep_id", id);
+            employeeHList = query.list();
             this.employees = employeeHList;
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new DAOException();
+        }
+        finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void addEmployee(Employee employee) throws DAOException {
+
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(employee);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            throw new DAOException();
+        }
+        finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void deleteEmployee(Employee employee) throws DAOException {
+
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(employee);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            throw new DAOException();
+        }
+        finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void updateEmployee(Employee employee) throws DAOException {
+
+
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(employee);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            throw new DAOException();
+        }
+        finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void getAllEmployee() throws DAOException {
+        Session session = null;
+        List<Employee> employeeHList;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            employeeHList = (List<Employee>) session.createCriteria(Employee.class).list();
+            this.employees = employeeHList;
+        }
+        catch (Exception e) {
+            throw new DAOException();
         }
         finally {
             if (session != null && session.isOpen()) {

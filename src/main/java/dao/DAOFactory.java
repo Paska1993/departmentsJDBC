@@ -1,9 +1,9 @@
 package dao;
 
 import dao.departmentDAO.DepartmentDAO;
-import dao.departmentDAO.jdbc.DepartmentJDBCImpl;
+import dao.departmentDAO.hibernate.DepartmentHibernateImpl;
 import dao.employeeDAO.EmployeeDAO;
-import dao.employeeDAO.jdbc.EmployeeJDBCImpl;
+import dao.employeeDAO.hibernate.EmployeeHibernateImpl;
 
 /**
  * Created by pavel on 23.04.15.
@@ -34,14 +34,14 @@ public class DAOFactory {
 
     public EmployeeDAO getEmployeeDAO() {
         if (employeeDAO == null) {
-            employeeDAO = new EmployeeJDBCImpl();
+            employeeDAO = new EmployeeHibernateImpl(); /*new EmployeeJDBCImpl();*/
         }
         return employeeDAO;
     }
 
     public DepartmentDAO getDeptDAO() {
         if (departmentDAO == null) {
-            departmentDAO = new DepartmentJDBCImpl();
+            departmentDAO = new DepartmentHibernateImpl(); /*new DepartmentJDBCImpl();*/
         }
         return departmentDAO;
     }

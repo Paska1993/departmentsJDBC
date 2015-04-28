@@ -1,6 +1,7 @@
 package dao.departmentDAO.jdbc;
 
 import dao.departmentDAO.DepartmentDAO;
+import exception.DAOException;
 import models.Department;
 
 import java.sql.*;
@@ -32,59 +33,132 @@ public class DepartmentJDBCImpl implements DepartmentDAO{
     }
 
 
-    public Department getDepartmentById(Integer id) throws ClassNotFoundException, SQLException {
+    public Department getDepartmentById(Integer id) throws DAOException {
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(GET_BY_ID);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             createDepartmentFromResultSet(resultSet);
             Department department = this.getAll().get(0);
             preparedStatement.close();
             connection.close();
-        return department;
-    }
+            resultSet.close();
+            return department;
+        }catch (Throwable e){
+            throw new DAOException();
+        }finally {
+            try {
+                preparedStatement.close();
+                resultSet.close();
+                connection.close();
+            }catch(Exception e){
+                throw new DAOException();
+            }
+            }
+        }
 
-    public void addDepartment(Department department) throws ClassNotFoundException, SQLException {
+
+    public void addDepartment(Department department)throws DAOException {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(ADD_QUERY);
             preparedStatement.setString(1, department.getName());
             preparedStatement.execute();
             preparedStatement.close();
             connection.close();
+        }catch (Throwable e){
+            throw new DAOException();
+        }finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            }catch(Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void deleteDepartment(Department department) throws ClassNotFoundException, SQLException {
+    public void deleteDepartment(Department department) throws DAOException {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(DELETE_QUERY);
             preparedStatement.setString(1, department.getName());
             preparedStatement.execute();
             preparedStatement.close();
             connection.close();
+        }catch (Throwable e){
+            throw new DAOException();
+        }finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            }catch(Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void updateDepartment(Department department) throws ClassNotFoundException, SQLException {
+    public void updateDepartment(Department department) throws DAOException {
+
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
             preparedStatement.setString(1, department.getName());
             preparedStatement.setInt(2, department.getId());
             preparedStatement.execute();
             preparedStatement.close();
             connection.close();
+        }catch (Throwable e){
+            throw new DAOException();
+        }finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            }catch(Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
-    public void getAllDepartments() throws ClassNotFoundException, SQLException {
+    public void getAllDepartments() throws DAOException {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(URL, NAME, PASSWORD);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(GET_ALL_QUERY);
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(GET_ALL_QUERY);
             createDepartmentFromResultSet(resultSet);
             resultSet.close();
             statement.close();
             connection.close();
+        }catch (Throwable e){
+            throw new DAOException();
+        }finally {
+            try {
+                statement.close();
+                resultSet.close();
+                connection.close();
+            }catch(Exception e){
+                throw new DAOException();
+            }
+        }
     }
 
     public List<Department> getAll() {

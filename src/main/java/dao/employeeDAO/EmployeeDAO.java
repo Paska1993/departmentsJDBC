@@ -1,19 +1,19 @@
 package dao.employeeDAO;
 
+import exception.DAOException;
 import models.Employee;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by pavel on 22.04.15.
  */
 public interface EmployeeDAO {
-    void getEmployeeById(Integer id) throws ClassNotFoundException, SQLException;
-    void getEmployeesByDepartmentId(Integer id) throws ClassNotFoundException, SQLException;
-    void addEmployee(Employee employee) throws ClassNotFoundException, SQLException;
-    void deleteEmployee(Employee employee) throws ClassNotFoundException, SQLException;
-    void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException;
-    void getAllEmployee() throws ClassNotFoundException, SQLException;
+    Employee getEmployeeById(Integer id) throws DAOException;
+    void getEmployeesByDepartmentId(Integer id) throws  DAOException;
+    void addEmployee(Employee employee) throws DAOException;
+    void deleteEmployee(Employee employee) throws DAOException;
+    void updateEmployee(Employee employee) throws DAOException;
+    void getAllEmployee() throws DAOException;
     List <Employee> getAll();
 }
