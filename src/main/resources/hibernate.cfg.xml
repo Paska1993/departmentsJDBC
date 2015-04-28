@@ -3,21 +3,21 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+     <!--   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost/departments</property>
         <property name="connection.username">root</property>
         <property name="connection.password">1</property>
         <property name="connection.pool_size">10</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <!--MySQLInnoDBDialect-->
+        &lt;!&ndash;MySQLInnoDBDialect&ndash;&gt;
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">validate</property>
         <property name="hibernate.connection.autocommit">false</property>
         <property name="current_session_context_class">thread</property>
 
-       <!-- <mapping class="models.Employee" />-->
+       &lt;!&ndash; <mapping class="models.Employee" />&ndash;&gt;
         <mapping class="models.Department" />
         <mapping class="models.Employee" />
-
+-->
     </session-factory>
 </hibernate-configuration>

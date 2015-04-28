@@ -4,7 +4,7 @@ import controllers.handlers.Handle;
 import exception.DAOException;
 import models.Department;
 import services.DepartmentService;
-import services.DepartmentServiceImpl;
+import services.impl.DepartmentSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class GetChosenDepartmentHandler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Department department = null;
         try {
-            DepartmentService departmentService = new DepartmentServiceImpl();
+            DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
             department = departmentService.getDepartmentById(Integer.valueOf(request.getParameter("id")));
             request.setAttribute("department",department);
             RequestDispatcher rd = request.getRequestDispatcher("department_edit.jsp");

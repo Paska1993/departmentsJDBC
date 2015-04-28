@@ -4,9 +4,9 @@ import controllers.handlers.Handle;
 import exception.DAOException;
 import models.Employee;
 import services.DepartmentService;
-import services.DepartmentServiceImpl;
 import services.EmployeeService;
-import services.EmployeeServiceImpl;
+import services.impl.DepartmentSpringServiceImpl;
+import services.impl.EmployeeSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,9 +21,9 @@ public class EmployeeIdSendler implements Handle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            DepartmentService departmentService = new DepartmentServiceImpl();
+            DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
             departmentService.getAllDepartments();
-            EmployeeService employeeService = new EmployeeServiceImpl();
+            EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
             Employee employee = employeeService.getEmployeeById(Integer.valueOf(request.getParameter("id")));
             request.setAttribute("departments",  departmentService.getAll());
             request.setAttribute("employee", employee);

@@ -3,7 +3,7 @@ package controllers.handlers.employeeHandlers;
 import controllers.handlers.Handle;
 import exception.DAOException;
 import services.EmployeeService;
-import services.EmployeeServiceImpl;
+import services.impl.EmployeeSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ public class EmployeeByDepartmentIdHandler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer department_id = Integer.valueOf(request.getParameter("id"));
         try {
-            EmployeeService employeeService = new EmployeeServiceImpl();
+            EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
             employeeService.getEmployeesByDepartmentId(department_id);
             request.setAttribute("employees", employeeService.getAll());
             RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");

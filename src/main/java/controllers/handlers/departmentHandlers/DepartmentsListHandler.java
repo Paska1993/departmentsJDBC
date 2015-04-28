@@ -3,7 +3,7 @@ package controllers.handlers.departmentHandlers;
 import controllers.handlers.Handle;
 import exception.DAOException;
 import services.DepartmentService;
-import services.DepartmentServiceImpl;
+import services.impl.DepartmentSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,9 +18,9 @@ public class DepartmentsListHandler implements Handle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            DepartmentService departmentService = new DepartmentServiceImpl();
+            DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
             departmentService.getAllDepartments();
-            request.setAttribute("departments", departmentService.getAll() /*departmentDAO.getAll()*/);
+            request.setAttribute("departments", departmentService.getAll());
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
         } catch (DAOException e) {

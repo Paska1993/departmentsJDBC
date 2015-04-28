@@ -4,9 +4,9 @@ import controllers.handlers.Handle;
 import exception.*;
 import models.Employee;
 import services.DepartmentService;
-import services.DepartmentServiceImpl;
 import services.EmployeeService;
-import services.EmployeeServiceImpl;
+import services.impl.DepartmentSpringServiceImpl;
+import services.impl.EmployeeSpringServiceImpl;
 import utils.NumberParser;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +23,7 @@ public class AddEmployeeHandler implements Handle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        DepartmentService departmentService = new DepartmentServiceImpl();
+        DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
         Employee employee = new Employee();
         employee.setName(request.getParameter("name"));
         employee.setSurname(request.getParameter("surname"));
@@ -34,7 +34,7 @@ public class AddEmployeeHandler implements Handle {
         try {
         employee.setDepartment(departmentService.getDepartmentById(Integer.valueOf(request.getParameter("department_id"))));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
-            EmployeeService employeeService = new EmployeeServiceImpl();
+            EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
             employeeService.addEmployee(employee);
             RequestDispatcher rd = request.getRequestDispatcher("employees.html");
             rd.forward(request, response);

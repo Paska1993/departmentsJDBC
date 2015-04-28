@@ -1,4 +1,4 @@
-package services;
+package services.impl;
 
 import dao.DAOFactory;
 import dao.employeeDAO.EmployeeDAO;
@@ -7,6 +7,7 @@ import exception.*;
 import models.Employee;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
+import services.EmployeeService;
 import utils.EmailFormatChecker;
 
 import java.util.List;

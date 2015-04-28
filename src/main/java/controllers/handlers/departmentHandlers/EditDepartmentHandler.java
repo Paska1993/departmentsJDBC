@@ -7,7 +7,7 @@ import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
 import services.DepartmentService;
-import services.DepartmentServiceImpl;
+import services.impl.DepartmentSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class EditDepartmentHandler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Department department = DepartmentFromRequest.createDepartment(request);
         try {
-            DepartmentService departmentService = new DepartmentServiceImpl();
+            DepartmentService departmentService = new DepartmentSpringServiceImpl();  /*new DepartmentServiceImpl();*/
             departmentService.updateDepartment(department);
             RequestDispatcher rd = request.getRequestDispatcher("index.html");
             rd.forward(request, response);

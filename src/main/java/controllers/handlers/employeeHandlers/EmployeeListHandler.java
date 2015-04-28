@@ -3,7 +3,7 @@ package controllers.handlers.employeeHandlers;
 import controllers.handlers.Handle;
 import exception.DAOException;
 import services.EmployeeService;
-import services.EmployeeServiceImpl;
+import services.impl.EmployeeSpringServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +18,7 @@ public class EmployeeListHandler implements Handle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            EmployeeService employeeService = new EmployeeServiceImpl();
+            EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
             employeeService.getAllEmployee();
             request.setAttribute("employees", employeeService.getAll());
             RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");

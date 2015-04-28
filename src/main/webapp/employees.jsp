@@ -17,7 +17,7 @@
     <div class="span2">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Home</a></li>
-        <li role="presentation" class="active"><a href="">All employees</a></li>
+        <li role="presentation" class="active"><a href="employees.html">All employees</a></li>
       </ul>
     </div>
     <div class="span10">

@@ -1,4 +1,4 @@
-package services;
+package services.impl;
 
 import dao.DAOFactory;
 import dao.departmentDAO.DepartmentDAO;
@@ -9,6 +9,7 @@ import exception.SameDepartmentNameException;
 import models.Department;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
+import services.DepartmentService;
 
 import java.util.List;
 
