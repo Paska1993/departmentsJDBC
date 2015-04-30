@@ -19,8 +19,8 @@ public class EmployeeListHandler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
-            employeeService.getAllEmployee();
-            request.setAttribute("employees", employeeService.getAll());
+            employeeService.getAll();
+            request.setAttribute("employees", employeeService.getList());
             RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");
             rd.forward(request, response);
         } catch (DAOException e) {

@@ -8,7 +8,7 @@ import models.Employee;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import services.EmployeeService;
-import utils.EmailFormatChecker;
+import utils.EmailValidator;
 
 import java.util.List;
 
@@ -23,21 +23,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         DAOs = DAOFactory.getInstance();
     }
 
-    public Employee getEmployeeById(Integer id) throws DAOException {
+    public Employee getById(Integer id) throws DAOException {
         return DAOs.getEmployeeDAO().getEmployeeById(id);
     }
 
-    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
+    public void getByDepartmentId(Integer id) throws DAOException {
         DAOs.getEmployeeDAO().getEmployeesByDepartmentId(id);
     }
 
-    public void addEmployee(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
+    public void add(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
 
         Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
         if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
-        }else if (!EmailFormatChecker.check(employee.getEmail())){
+        }else if (!EmailValidator.check(employee.getEmail())){
             throw new EmailFormatException(employee.getEmail());
         }else if (employee.getSalary() < 0){
             throw new SalaryFormatException(employee.getSalary().toString());
@@ -48,16 +48,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
-    public void deleteEmployee(Employee employee) throws DAOException {
+    public void delete(Employee employee) throws DAOException {
         DAOs.getEmployeeDAO().deleteEmployee(employee);
     }
 
-    public void updateEmployee(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
+    public void update(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
         Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
         if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
-        }else if (!EmailFormatChecker.check(employee.getEmail())){
+        }else if (!EmailValidator.check(employee.getEmail())){
             throw new EmailFormatException(employee.getEmail());
         }else if (employee.getSalary() < 0){
             throw new SalaryFormatException(employee.getSalary().toString());
@@ -68,10 +68,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
-    public void getAllEmployee() throws DAOException {
+    public void getAll() throws DAOException {
         DAOs.getEmployeeDAO().getAllEmployee();
     }
-    public List <Employee> getAll(){
+    public List <Employee> getList(){
         return DAOs.getEmployeeDAO().getAll();
     }
 

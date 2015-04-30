@@ -7,6 +7,12 @@
 
     <context:component-scan base-package="services , controllers , models"/>
 
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=""/>
+    </bean>
+
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
               destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -38,7 +44,7 @@
             <property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
         </bean>
 
-        <bean id="EmployeeDAOImpl" class="dao.employeeDAO.hibernate.EmployeeSpringHibernateImpl">
+        <bean id="EmployeeDAO" class="dao.employeeDAO.hibernate.EmployeeSpringHibernateImpl">
             <property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
         </bean>
 
@@ -47,8 +53,12 @@
         </bean>
 
         <bean id="employeeSpringService" class="services.impl.EmployeeSpringServiceImpl">
-            <property name="EmployeeDAOImpl" ref="EmployeeDAOImpl"/>
+            <property name="EmployeeDAO" ref="EmployeeDAO"/>
         </bean>
+
+        <bean id="Department" class="models.Department"></bean>
+
+        <bean id="Employee" class="models.Employee"></bean>
 
     </beans>
 

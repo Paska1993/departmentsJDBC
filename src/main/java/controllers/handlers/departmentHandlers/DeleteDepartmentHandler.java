@@ -21,7 +21,7 @@ public class DeleteDepartmentHandler implements Handle {
         Department department = DepartmentFromRequest.createDepartment(request);
         try {
             DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
-            departmentService.deleteDepartment(department);
+            departmentService.delete(department);
             RequestDispatcher rd = request.getRequestDispatcher("index.html");
             rd.forward(request, response);
         }catch (DAOException e) {

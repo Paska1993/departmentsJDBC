@@ -3,11 +3,13 @@ package services.impl;
 import dao.employeeDAO.EmployeeDAO;
 import exception.*;
 import models.Employee;
+import net.sf.oval.ConstraintViolation;
+import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.EmployeeService;
+import utils.EmailValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,57 +19,92 @@ import java.util.List;
  */
 @Service
 public class EmployeeSpringServiceImpl implements EmployeeService {
+
     private List<Employee> employees;
 
-    private ClassPathXmlApplicationContext context = null;
+    private EmployeeDAO employeeDAO;
 
     @Autowired
-    private EmployeeDAO EmployeeDAOImpl;
-
-    public void setEmployeeDAOImpl(EmployeeDAO employeeDAOImpl) {
-        EmployeeDAOImpl = employeeDAOImpl;
+    public void setEmployeeDAO(EmployeeDAO employeeDAO) {
+        this.employeeDAO = employeeDAO;
     }
 
     public EmployeeSpringServiceImpl() {
         this.employees = new ArrayList<Employee>();
-        context = new ClassPathXmlApplicationContext("spring.xml");
-        EmployeeDAOImpl = (EmployeeDAO) context.getBean("EmployeeDAOImpl");
     }
 
     @Transactional
-    public Employee getEmployeeById(Integer id) throws DAOException {
-        return EmployeeDAOImpl.getEmployeeById(id);
+    public Employee getById(Integer id) throws DAOException {
+        return employeeDAO.getEmployeeById(id);
     }
 
     @Transactional
-    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
-        EmployeeDAOImpl.getEmployeesByDepartmentId(id);
-        this.employees = EmployeeDAOImpl.getAll();
+    public void getByDepartmentId(Integer id) throws DAOException {
+        employeeDAO.getEmployeesByDepartmentId(id);
+        this.employees = employeeDAO.getAll();
     }
 
     @Transactional
-    public void addEmployee(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
-        EmployeeDAOImpl.addEmployee(employee);
+    public void add(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
+        Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(employee);
+        if (violations.size() > 0) {
+            throw new EmployeeNullFieldsException(violations);
+        }else if (!EmailValidator.check(employee.getEmail())){
+            throw new EmailFormatException(employee.getEmail());
+        }else if (employee.getSalary() < 0){
+            throw new SalaryFormatException(employee.getSalary().toString());
+        }else if(chekEmail(employee)) {
+            throw new SameEmailException(employee.getEmail());
+        }else {
+            employeeDAO.addEmployee(employee);
+        }
     }
 
     @Transactional
-    public void deleteEmployee(Employee employee) throws DAOException {
-        EmployeeDAOImpl.deleteEmployee(employee);
+    public void delete(Employee employee) throws DAOException {
+        employeeDAO.deleteEmployee(employee);
     }
 
     @Transactional
-    public void updateEmployee(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
-        EmployeeDAOImpl.updateEmployee(employee);
+    public void update(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
+        Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(employee);
+        if (violations.size() > 0) {
+            throw new EmployeeNullFieldsException(violations);
+        }else if (!EmailValidator.check(employee.getEmail())){
+            throw new EmailFormatException(employee.getEmail());
+        }else if (employee.getSalary() < 0){
+            throw new SalaryFormatException(employee.getSalary().toString());
+        }else if(chekEmail(employee)) {
+            throw new SameEmailException(employee.getEmail());
+        }else {
+            employeeDAO.updateEmployee(employee);
+        }
     }
 
     @Transactional
-    public void getAllEmployee() throws DAOException {
-        EmployeeDAOImpl.getAllEmployee();
-        this.employees = EmployeeDAOImpl.getAll();
+    public void getAll() throws DAOException {
+        employeeDAO.getAllEmployee();
+        this.employees = employeeDAO.getAll();
     }
 
-    public List<Employee> getAll() {
+    public List<Employee> getList() {
         return this.employees;
+    }
+
+    private  boolean chekEmail(Employee employee) throws DAOException {
+        employeeDAO.getAllEmployee();
+        for(Employee chek : employeeDAO.getAll()){
+            if(chek.getEmail().equals(employee.getEmail())) {
+                if(!chek.equals(employee)) {
+                    return true;
+                }else{
+                   // employeeDAO.delete(employee);
+                }
+            }
+        }
+        return false;
     }
 
 }

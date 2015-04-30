@@ -63,7 +63,7 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <form name="sample" action="/add_department.jsp" method="POST">
+            <form name="sample" action="/befor_add.html" method="POST">
                 <input type="submit" class="btn btn-primary" value="Add">
             </form>
         </div>

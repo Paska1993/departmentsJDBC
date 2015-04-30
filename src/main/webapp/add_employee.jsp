@@ -33,6 +33,7 @@
       <div class="col-sm-10">
         <input type="text" name="birthday" class="form-control" placeholder="Date of birth in format YYYY-MM-DD"
                value="<c:out value="${requestScope.employee.getBirthday()}"></c:out>">
+        <p style="color: brown; font-size: 16px"><c:out value="${requestScope.dateErrorMessage}"></c:out></p>
       </div>
     </div>
     <div class="form-group">

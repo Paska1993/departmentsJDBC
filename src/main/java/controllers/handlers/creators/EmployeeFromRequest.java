@@ -1,7 +1,6 @@
 package controllers.handlers.creators;
 
 import models.Employee;
-import utils.NumberParser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -17,7 +16,7 @@ public class EmployeeFromRequest {
         employee.setName(request.getParameter("name"));
         employee.setSurname(request.getParameter("surname"));
         employee.setAddress(request.getParameter("address"));
-        employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
+        //employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
         //employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
@@ -36,7 +35,7 @@ public class EmployeeFromRequest {
         employee.setName(request.getParameter("name"));
         employee.setSurname(request.getParameter("surname"));
         employee.setAddress(request.getParameter("address"));
-        employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
+        //employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
        // employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));

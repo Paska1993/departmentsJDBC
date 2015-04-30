@@ -21,7 +21,7 @@ public class GetChosenDepartmentHandler implements Handle {
         Department department = null;
         try {
             DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
-            department = departmentService.getDepartmentById(Integer.valueOf(request.getParameter("id")));
+            department = departmentService.getById(Integer.valueOf(request.getParameter("id")));
             request.setAttribute("department",department);
             RequestDispatcher rd = request.getRequestDispatcher("department_edit.jsp");
             rd.forward(request,response);

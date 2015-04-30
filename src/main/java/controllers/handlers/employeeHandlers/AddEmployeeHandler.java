@@ -25,29 +25,28 @@ public class AddEmployeeHandler implements Handle {
 
         DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
         Employee employee = new Employee();
+        try {
         employee.setName(request.getParameter("name"));
         employee.setSurname(request.getParameter("surname"));
         employee.setAddress(request.getParameter("address"));
         employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
-
-        try {
-        employee.setDepartment(departmentService.getDepartmentById(Integer.valueOf(request.getParameter("department_id"))));
+        employee.setDepartment(departmentService.getById(Integer.valueOf(request.getParameter("department_id"))));
         employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
             EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
-            employeeService.addEmployee(employee);
+            employeeService.add(employee);
             RequestDispatcher rd = request.getRequestDispatcher("employees.html");
             rd.forward(request, response);
 
         } catch (EmployeeNullFieldsException e) {
             try {
-                departmentService.getAllDepartments();
+                departmentService.getAll();
             } catch (DAOException e1) {
                 request.setAttribute("errorMessage",e1.getDatabaseException());
                 RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                 rd.forward(request, response);
             }
-            request.setAttribute("departments", departmentService.getAll());
+            request.setAttribute("departments", departmentService.getList());
             request.setAttribute("employee", employee);
             request.setAttribute("errorMessage", e.getErrorMessage());
             RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
@@ -55,13 +54,13 @@ public class AddEmployeeHandler implements Handle {
 
         } catch (SameEmailException e) {
             try {
-                departmentService.getAllDepartments();
+                departmentService.getAll();
             } catch (DAOException e1) {
                 request.setAttribute("errorMessage",e1.getDatabaseException());
                 RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                 rd.forward(request, response);
             }
-            request.setAttribute("departments", departmentService.getAll());
+            request.setAttribute("departments", departmentService.getList());
             request.setAttribute("employee", employee);
             request.setAttribute("sameEmailError", "Employee with this email is already exist");
             RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
@@ -69,13 +68,13 @@ public class AddEmployeeHandler implements Handle {
 
         } catch (EmailFormatException e) {
             try {
-                departmentService.getAllDepartments();
+                departmentService.getAll();
             } catch (DAOException e1) {
                 request.setAttribute("errorMessage",e1.getDatabaseException());
                 RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                 rd.forward(request, response);
             }
-            request.setAttribute("departments", departmentService.getAll());
+            request.setAttribute("departments", departmentService.getList());
             request.setAttribute("employee", employee);
             request.setAttribute("emailFormatError", "Email format is not correct");
             RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
@@ -83,13 +82,13 @@ public class AddEmployeeHandler implements Handle {
 
         } catch (SalaryFormatException e) {
             try {
-                departmentService.getAllDepartments();
+                departmentService.getAll();
             } catch (DAOException e1) {
                 request.setAttribute("errorMessage",e1.getDatabaseException());
                 RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                 rd.forward(request, response);
             }
-            request.setAttribute("departments", departmentService.getAll());
+            request.setAttribute("departments", departmentService.getList());
             request.setAttribute("employee", employee);
             request.setAttribute("salaryError", "Salary cannot be less then 0");
             RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");

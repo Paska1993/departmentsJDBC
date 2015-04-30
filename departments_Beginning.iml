@@ -16,7 +16,6 @@
         <datasource-map>
           <unit-entry name="dao:departmentDAO:hibernate:config:hibernate.cfg.xml" />
           <unit-entry name="hibernate.cfg.xml" />
-          <unit-entry name="hibernateAnnotatedSessionFactory" value="dataSource" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />

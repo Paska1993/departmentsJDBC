@@ -1,8 +1,8 @@
 package models;
 
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -10,6 +10,7 @@ import java.sql.Date;
 /**
  * Created on 27.04.15.
  */
+@Component
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -26,6 +27,7 @@ public class Employee {
 
     @NotEmpty(message = "Salary: is empty")
     @NotNull(message = "Salary: is empty")
+    @Digits(message = "Please type a valid data")
     private Double salary;
 
     @NotEmpty(message = "Address: is empty")
@@ -35,10 +37,12 @@ public class Employee {
 
     @NotEmpty(message = "Date of birth: is empty")
     @NotNull(message = "Date of birth: is empty")
+    @Past(message = "Wrong date")
     private Date birthday;
 
     @NotEmpty(message = "Email: is empty")
     @NotNull(message = "Email: is empty")
+    @Email(message = "Wrong Email format")
     private String email;
 
     private Department department;
@@ -118,5 +122,17 @@ public class Employee {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Employee employee = (Employee) o;
+        return this.getId().equals(employee.getId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }

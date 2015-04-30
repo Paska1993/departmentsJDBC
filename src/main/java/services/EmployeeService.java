@@ -9,13 +9,13 @@ import java.util.List;
  * Created on 27.04.15.
  */
 public interface EmployeeService {
-    Employee getEmployeeById(Integer id) throws DAOException;
-    void getEmployeesByDepartmentId(Integer id) throws DAOException;
-    void addEmployee(Employee employee) throws EmployeeNullFieldsException,
+    Employee getById(Integer id) throws DAOException;
+    void getByDepartmentId(Integer id) throws DAOException;
+    void add(Employee employee) throws EmployeeNullFieldsException,
             EmailFormatException, SalaryFormatException, SameEmailException, DAOException;
-    void deleteEmployee(Employee employee) throws DAOException;
-    void updateEmployee(Employee employee) throws EmployeeNullFieldsException, EmailFormatException,
+    void delete(Employee employee) throws DAOException;
+    void update(Employee employee) throws EmployeeNullFieldsException, EmailFormatException,
             SalaryFormatException, SameEmailException, DAOException;
-    void getAllEmployee() throws DAOException;
-    List<Employee> getAll();
+    void getAll() throws DAOException;
+    List<Employee> getList();
 }

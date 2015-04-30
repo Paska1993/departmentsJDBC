@@ -5,8 +5,9 @@ import exception.DAOException;
 import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
+import net.sf.oval.ConstraintViolation;
+import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.DepartmentService;
@@ -22,50 +23,79 @@ public class DepartmentSpringServiceImpl implements DepartmentService {
 
     private List<Department> departments;
 
-    private ClassPathXmlApplicationContext context = null;
-
-
-    @Autowired
     private DepartmentDAO departmentDAO;
 
+    @Autowired
     public void setDepartmentDAO(DepartmentDAO departmentDAO) {
         this.departmentDAO = departmentDAO;
     }
 
     public DepartmentSpringServiceImpl() {
         this.departments = new ArrayList<Department>();
-        context = new ClassPathXmlApplicationContext("spring.xml");
-        departmentDAO = (DepartmentDAO) context.getBean("DepartmentDAO");
     }
 
     @Transactional
-    public Department getDepartmentById(Integer id) throws DAOException {
+    public Department getById(Integer id) throws DAOException {
         return departmentDAO.getDepartmentById(id);
     }
 
     @Transactional
-    public void addDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        departmentDAO.addDepartment(department);
+    public void add(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
+        Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(department);
+        if(violations.size() > 0){
+            throw new DepartmentNullNameExceptin("Department name can`t be empty");
+        }
+        else{
+            if(isEquals(department)){
+                throw new SameDepartmentNameException("Department with this name is already exist");
+            }
+            else{
+                departmentDAO.addDepartment(department);
+            }
+        }
     }
 
     @Transactional
-    public void updateDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        departmentDAO.updateDepartment(department);
+    public void update(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
+        Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(department);
+        if(violations.size() > 0){
+            throw new DepartmentNullNameExceptin("Department name can`t be empty");
+        }
+        else{
+            if(isEquals(department)){
+                throw new SameDepartmentNameException("Department with this name is already exist");
+            }
+            else{
+                departmentDAO.updateDepartment(department);
+            }
+        }
     }
 
     @Transactional
-    public void deleteDepartment(Department department) throws DAOException {
+    public void delete(Department department) throws DAOException {
         departmentDAO.deleteDepartment(department);
     }
 
     @Transactional
-    public void getAllDepartments() throws DAOException {
+    public void getAll() throws DAOException {
         departmentDAO.getAllDepartments();
         this.departments = departmentDAO.getAll();
     }
 
-    public List<Department> getAll() {
+    public List<Department> getList() {
         return this.departments;
+    }
+
+    private boolean isEquals(Department department) throws DAOException {
+        departmentDAO.getAllDepartments();
+        for(Department check : departmentDAO.getAll()){
+            if(department.getName().equals(check.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

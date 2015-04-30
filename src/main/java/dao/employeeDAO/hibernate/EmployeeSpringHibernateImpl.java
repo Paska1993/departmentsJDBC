@@ -112,7 +112,6 @@ public class EmployeeSpringHibernateImpl implements EmployeeDAO {
 
     public void updateEmployee(Employee employee) throws DAOException {
 
-
         Session session = null;
         try {
             session = this.sessionFactory.openSession();

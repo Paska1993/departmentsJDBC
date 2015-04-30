@@ -22,7 +22,7 @@ public class DeleteEmployeeHandler implements Handle {
         Employee employee = EmployeeFromRequest.createEmployeeID(request);
         try {
             EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
-            employeeService.deleteEmployee(employee);
+            employeeService.delete(employee);
             RequestDispatcher rd = request.getRequestDispatcher("employees.html");
             rd.forward(request, response);
         } catch (DAOException e) {

@@ -24,7 +24,7 @@ public class AddDepartmentHandler implements Handle {
         Department department = DepartmentFromRequest.createDepartmentByName(request);
         try {
             DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
-            departmentService.addDepartment(department);
+            departmentService.add(department);
             RequestDispatcher rd = request.getRequestDispatcher("index.html");
             rd.forward(request, response);
         } catch (DepartmentNullNameExceptin e) {

@@ -3,6 +3,7 @@ package models;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 /**
  * Created by pavel on 22.04.15.
  */
+@Component
 @Entity
 @Table(name = "department")
 public class Department {
@@ -27,7 +29,7 @@ public class Department {
         return employees;
     }
 
-    public void setEmployees(Set employees) {
+    public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
 

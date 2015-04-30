@@ -19,8 +19,8 @@ public class DepartmentsForAddHandler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
-            departmentService.getAllDepartments();
-            request.setAttribute("departments", departmentService.getAll());
+            departmentService.getAll();
+            request.setAttribute("departments", departmentService.getList());
             RequestDispatcher rd = request.getRequestDispatcher("add_employee.jsp");
             rd.forward(request, response);
         } catch (DAOException e) {

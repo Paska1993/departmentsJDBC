@@ -11,10 +11,10 @@ import java.util.List;
  * Created on 27.04.15.
  */
 public interface DepartmentService {
-    Department getDepartmentById(Integer id) throws DAOException;
-    void addDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException;
-    void updateDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException;
-    void deleteDepartment(Department department) throws DAOException;
-    void getAllDepartments() throws DAOException;
-    List<Department> getAll();
+    Department getById(Integer id) throws DAOException;
+    void add(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException;
+    void update(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException;
+    void delete(Department department) throws DAOException;
+    void getAll() throws DAOException;
+    List<Department> getList();
 }

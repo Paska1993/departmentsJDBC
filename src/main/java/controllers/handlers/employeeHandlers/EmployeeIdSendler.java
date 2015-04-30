@@ -22,10 +22,10 @@ public class EmployeeIdSendler implements Handle {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
-            departmentService.getAllDepartments();
+            departmentService.getAll();
             EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
-            Employee employee = employeeService.getEmployeeById(Integer.valueOf(request.getParameter("id")));
-            request.setAttribute("departments",  departmentService.getAll());
+            Employee employee = employeeService.getById(Integer.valueOf(request.getParameter("id")));
+            request.setAttribute("departments",  departmentService.getList());
             request.setAttribute("employee", employee);
             RequestDispatcher rd = request.getRequestDispatcher("edit_employee.jsp");
             rd.forward(request,response);

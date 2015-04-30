@@ -17,17 +17,18 @@ import java.util.List;
  * Created by pavel on 23.04.15.
  */
 public class DepartmentServiceImpl implements DepartmentService {
+
     private DAOFactory DAOs;
 
     public DepartmentServiceImpl() {
         DAOs = DAOFactory.getInstance();
     }
 
-    public Department getDepartmentById(Integer id) throws  DAOException {
+    public Department getById(Integer id) throws  DAOException {
         return DAOs.getDeptDAO().getDepartmentById(id);
     }
 
-    public void addDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException{
+    public void add(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException{
         Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
@@ -43,7 +44,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
-    public void updateDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
+    public void update(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
         Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
@@ -59,15 +60,15 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
-    public void deleteDepartment(Department department) throws DAOException {
+    public void delete(Department department) throws DAOException {
         DAOs.getDeptDAO().deleteDepartment(department);
     }
 
-    public void getAllDepartments() throws DAOException {
+    public void getAll() throws DAOException {
             DAOs.getDeptDAO().getAllDepartments();
     }
 
-    public List<Department> getAll(){
+    public List<Department> getList(){
         return DAOs.getDeptDAO().getAll();
     }
 

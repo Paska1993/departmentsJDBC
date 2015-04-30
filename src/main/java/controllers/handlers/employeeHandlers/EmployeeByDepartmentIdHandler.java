@@ -20,8 +20,8 @@ public class EmployeeByDepartmentIdHandler implements Handle {
         Integer department_id = Integer.valueOf(request.getParameter("id"));
         try {
             EmployeeService employeeService = new EmployeeSpringServiceImpl(); /*new EmployeeServiceImpl();*/
-            employeeService.getEmployeesByDepartmentId(department_id);
-            request.setAttribute("employees", employeeService.getAll());
+            employeeService.getByDepartmentId(department_id);
+            request.setAttribute("employees", employeeService.getList());
             RequestDispatcher rd = request.getRequestDispatcher("employees.jsp");
             rd.forward(request, response);
         } catch (DAOException e) {
