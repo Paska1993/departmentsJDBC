@@ -7,8 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +18,9 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
 
     private List<Department> department;
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private SessionFactory sessionFactory;
+
 
     public DepartmentSpringHibernateImpl(){
         this.department = new ArrayList<Department>();
@@ -43,7 +40,7 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
         Session session = null;
         Department department = null;
         try {
-            session = this.sessionFactory.openSession();
+            session = this.getSessionFactory().openSession();
             department = (Department) session.get(Department.class, id);
         }
         catch (Exception e) {
@@ -60,7 +57,7 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
     public void addDepartment(Department department) throws DAOException {
         Session session = null;
         try {
-            session = this.sessionFactory.openSession();
+            session = this.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(department);
             session.getTransaction().commit();
@@ -78,7 +75,7 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
     public void deleteDepartment(Department department) throws DAOException {
         Session session = null;
         try {
-            session = this.sessionFactory.openSession();
+            session = this.getSessionFactory().openSession();
             session.beginTransaction();
             session.delete(department);
             session.getTransaction().commit();
@@ -97,7 +94,7 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
 
         Session session = null;
         try {
-            session = this.sessionFactory.openSession();
+            session = this.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(department);
             session.getTransaction().commit();
@@ -116,7 +113,7 @@ public class DepartmentSpringHibernateImpl implements DepartmentDAO {
         Session session = null;
         List<Department> dep;
         try {
-            session = this.sessionFactory.openSession();
+            session = this.getSessionFactory().openSession();
             List<Department> departments = session.createCriteria(Department.class).list();
             this.department = departments;
             session.close();

@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by pavel on 22.04.15.
- */
+
 public class DepartmentsListHandler implements Handle {
 
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            DepartmentService departmentService = new DepartmentSpringServiceImpl(); /*new DepartmentServiceImpl();*/
+            DepartmentService departmentService = new DepartmentSpringServiceImpl();
+/*new DepartmentServiceImpl();*/
+
             departmentService.getAllDepartments();
             request.setAttribute("departments", departmentService.getAll());
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

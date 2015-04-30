@@ -50,6 +50,7 @@
                             <input type="submit" class="btn btn-danger" value="Delete">
                             <input type="hidden" name="id" value="${val.id}">
                             <input type="hidden" name="name" value="${val.name}">
+                            <input type="hidden" name="department" value="${val}">
                         </form>
                     </td>
                     <td>

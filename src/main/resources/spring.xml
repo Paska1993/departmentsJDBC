@@ -2,6 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="suffix" value=".jsp" />
+        </bean>-->
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
@@ -11,25 +15,6 @@
         <property name="password" value="1" />
     </bean>
 
-
-    <!--<bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-        </property>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>-->
-
-    <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="hibernateAnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -49,11 +34,15 @@
     </bean>
 
 
-    <bean id="DepartmentDAOImpl" class="dao.departmentDAO.hibernate.DepartmentSpringHibernateImpl">
+    <bean id="DepartmentDAO" class="dao.departmentDAO.hibernate.DepartmentSpringHibernateImpl">
         <property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
     </bean>
 
     <bean id="EmployeeDAOImpl" class="dao.employeeDAO.hibernate.EmployeeSpringHibernateImpl">
         <property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
     </bean>
+
+    <!--   <bean id="departmentService" class="services.impl.DepartmentSpringServiceImpl">
+           <property name="DepartmentDAO" ref="DepartmentDAO"/>
+       </bean>-->
 </beans>

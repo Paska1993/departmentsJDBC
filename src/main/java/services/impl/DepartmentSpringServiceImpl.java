@@ -8,6 +8,7 @@ import models.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import services.DepartmentService;
 
 import java.util.ArrayList;
@@ -23,38 +24,48 @@ public class DepartmentSpringServiceImpl implements DepartmentService {
 
     private ClassPathXmlApplicationContext context = null;
 
+
     @Autowired
-    private DepartmentDAO departmentDAOImpl;
+    private DepartmentDAO departmentDAO;
+
+    public void setDepartmentDAO(DepartmentDAO departmentDAO) {
+        this.departmentDAO = departmentDAO;
+    }
 
     public DepartmentSpringServiceImpl() {
         this.departments = new ArrayList<Department>();
         context = new ClassPathXmlApplicationContext("spring.xml");
-        departmentDAOImpl = (DepartmentDAO) context.getBean("DepartmentDAOImpl");
+        departmentDAO = (DepartmentDAO) context.getBean("DepartmentDAO");
     }
 
+    @Transactional
     public Department getDepartmentById(Integer id) throws DAOException {
-        return departmentDAOImpl.getDepartmentById(id);
+        return departmentDAO.getDepartmentById(id);
     }
 
-    /*@Transactional*/
+    @Transactional
     public void addDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        departmentDAOImpl.addDepartment(department);
+        departmentDAO.addDepartment(department);
     }
 
+    @Transactional
     public void updateDepartment(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        departmentDAOImpl.updateDepartment(department);
+        departmentDAO.updateDepartment(department);
     }
 
+    @Transactional
     public void deleteDepartment(Department department) throws DAOException {
-        departmentDAOImpl.deleteDepartment(department);
+        departmentDAO.deleteDepartment(department);
     }
 
+    @Transactional
     public void getAllDepartments() throws DAOException {
-        departmentDAOImpl.getAllDepartments();
-        this.departments = departmentDAOImpl.getAll();
+        departmentDAO.getAllDepartments();
+        this.departments = departmentDAO.getAll();
     }
 
     public List<Department> getAll() {
         return this.departments;
     }
+
 }

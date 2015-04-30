@@ -1,3 +1,4 @@
+/*
 package controllers;
 
 import controllers.handlers.Handle;
@@ -14,9 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+*/
 /**
  * Created by pavel on 22.04.15.
- */
+ *//*
+
 @WebServlet(name = "DispatcherServlet", urlPatterns = "*.html")
 public class DispatcherServlet extends HttpServlet {
 
@@ -46,3 +49,4 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
+*/
