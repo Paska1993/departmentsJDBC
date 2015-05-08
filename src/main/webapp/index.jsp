@@ -6,6 +6,7 @@
 
 <head>
     <title>departments</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/style.css" title="style" />
 </head>
@@ -19,10 +20,11 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active"><a href="">Home</a></li>
-                <li role="presentation"><a href="employees.html">All employees</a></li>
-            </ul>
+            <div class="list-group">
+                <a class="list-group-item" href="#"><i class="fa fa-home fa-lg"></i>&nbsp; Home</a>
+                <a class="list-group-item" href="employees.html"><i class="fa fa-users fa-fw"></i>&nbsp; Employees</a>
+                <a class="list-group-item" href="error.jsp"><i class="fa fa-cog fa-spin"></i>&nbsp; Settings</a>
+            </div>
         </div>
         <div class="span10">
             <table class="table table-bordered">
@@ -63,7 +65,7 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <form name="sample" action="/befor_add.html" method="POST">
+            <form name="sample" action="/befor_add.html" method="GET">
                 <input type="submit" class="btn btn-primary" value="Add">
             </form>
         </div>

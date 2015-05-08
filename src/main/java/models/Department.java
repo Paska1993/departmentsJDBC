@@ -1,11 +1,11 @@
 package models;
 
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -18,8 +18,7 @@ public class Department {
 
     private Integer id;
 
-    @NotNull(message = "Field Name cannot be empty")
-    @NotEmpty(message = "Field Name cannot be empty")
+    @Size(min = 3, max = 45, message = "Department name is empty, or less then 3 characters")
     private String name;
 
     private Set<Employee> employees;

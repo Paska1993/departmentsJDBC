@@ -98,7 +98,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
             preparedStatement.setDouble(3, employee.getSalary());
             preparedStatement.setString(4, employee.getAddress());
             //preparedStatement.setInt(5, employee.getDepartment_id());
-            preparedStatement.setDate(6, employee.getBirthday());
+            //preparedStatement.setDate(6, employee.getBirthday());
             preparedStatement.setString(7, employee.getEmail());
             preparedStatement.execute();
         } catch (Throwable e) {
@@ -146,7 +146,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
             preparedStatement.setDouble(3, employee.getSalary());
             preparedStatement.setString(4, employee.getAddress());
            // preparedStatement.setInt(5, employee.getDepartment_id());
-            preparedStatement.setDate(6, employee.getBirthday());
+            //preparedStatement.setDate(6, employee.getBirthday());
             preparedStatement.setString(7, employee.getEmail());
             preparedStatement.setInt(8, employee.getId());
             preparedStatement.execute();
@@ -206,7 +206,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
             employee.setSalary(salary);
             employee.setAddress(address);
            // employee.setDepartment_id(departments_id);
-            employee.setBirthday(date_of_birth);
+            //employee.setBirthday(date_of_birth);
             employee.setEmail(email);
             this.employees.add(employee);
         }

@@ -3,12 +3,11 @@ package services.impl;
 import dao.DAOFactory;
 import dao.employeeDAO.EmployeeDAO;
 import dao.employeeDAO.jdbc.EmployeeJDBCImpl;
-import exception.*;
+import exception.DAOException;
+import exception.SalaryFormatException;
+import exception.SameEmailException;
 import models.Employee;
-import net.sf.oval.ConstraintViolation;
-import net.sf.oval.Validator;
 import services.EmployeeService;
-import utils.EmailValidator;
 
 import java.util.List;
 
@@ -31,9 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         DAOs.getEmployeeDAO().getEmployeesByDepartmentId(id);
     }
 
-    public void add(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
+    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*/ SalaryFormatException, SameEmailException, DAOException {
 
-        Validator validator = new Validator();
+       /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
         if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
@@ -45,15 +44,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new SameEmailException(employee.getEmail());
         }else {
             DAOs.getEmployeeDAO().addEmployee(employee);
-        }
+        }*/
     }
 
     public void delete(Employee employee) throws DAOException {
         DAOs.getEmployeeDAO().deleteEmployee(employee);
     }
 
-    public void update(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
-        Validator validator = new Validator();
+    public void update(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException, SalaryFormatException,*/ SameEmailException, DAOException {
+      /*  Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
         if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
@@ -61,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmailFormatException(employee.getEmail());
         }else if (employee.getSalary() < 0){
             throw new SalaryFormatException(employee.getSalary().toString());
-        }else if(!chekEmail(employee)) {
+        }else*/ if(!chekEmail(employee)) {
             throw new SameEmailException(employee.getEmail());
         }else {
             DAOs.getEmployeeDAO().updateEmployee(employee);

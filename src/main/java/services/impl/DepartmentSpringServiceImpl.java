@@ -2,11 +2,8 @@ package services.impl;
 
 import dao.departmentDAO.DepartmentDAO;
 import exception.DAOException;
-import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
-import net.sf.oval.ConstraintViolation;
-import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,37 +37,43 @@ public class DepartmentSpringServiceImpl implements DepartmentService {
     }
 
     @Transactional
-    public void add(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        Validator validator = new Validator();
+    public void add(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException {
+       /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
+            if(department.getName().trim().equals("") || department.getName().equals(null))
             throw new DepartmentNullNameExceptin("Department name can`t be empty");
+            else
+                throw new DepartmentNullNameExceptin("Department name must be longer then 3 characters");
         }
-        else{
+        else{*/
             if(isEquals(department)){
                 throw new SameDepartmentNameException("Department with this name is already exist");
             }
             else{
                 departmentDAO.addDepartment(department);
             }
-        }
+       /* }*/
     }
 
     @Transactional
-    public void update(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        Validator validator = new Validator();
+    public void update(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException {
+       /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
-            throw new DepartmentNullNameExceptin("Department name can`t be empty");
+            if(department.getName().trim().equals("") || department.getName().equals(null))
+                throw new DepartmentNullNameExceptin("Department name can`t be empty");
+            else
+                throw new DepartmentNullNameExceptin("Department name must be longer then 3 characters");
         }
-        else{
+        else{*/
             if(isEquals(department)){
                 throw new SameDepartmentNameException("Department with this name is already exist");
             }
             else{
                 departmentDAO.updateDepartment(department);
             }
-        }
+       /* }*/
     }
 
     @Transactional

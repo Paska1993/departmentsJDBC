@@ -3,7 +3,6 @@ package controllers.handlers.departmentHandlers;
 import controllers.handlers.Handle;
 import controllers.handlers.creators.DepartmentFromRequest;
 import exception.DAOException;
-import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
 import services.DepartmentService;
@@ -27,11 +26,11 @@ public class EditDepartmentHandler implements Handle {
             departmentService.update(department);
             RequestDispatcher rd = request.getRequestDispatcher("index.html");
             rd.forward(request, response);
-        } catch (DepartmentNullNameExceptin e) {
+        } /*catch (DepartmentNullNameExceptin e) {
             request.setAttribute("errorMessage", e.getErrorMessage());
             RequestDispatcher rd = request.getRequestDispatcher("department_edit.jsp");
             rd.forward(request, response);
-        } catch (SameDepartmentNameException e) {
+        }*/ catch (SameDepartmentNameException e) {
             request.setAttribute("department", department);
             request.setAttribute("errorMessage", e.getErrorMessage());
             RequestDispatcher rd = request.getRequestDispatcher("department_edit.jsp");

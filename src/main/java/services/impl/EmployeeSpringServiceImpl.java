@@ -1,15 +1,14 @@
 package services.impl;
 
 import dao.employeeDAO.EmployeeDAO;
-import exception.*;
+import exception.DAOException;
+import exception.SalaryFormatException;
+import exception.SameEmailException;
 import models.Employee;
-import net.sf.oval.ConstraintViolation;
-import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.EmployeeService;
-import utils.EmailValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +44,16 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
     }
 
     @Transactional
-    public void add(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
-        Validator validator = new Validator();
-        List<ConstraintViolation> violations = validator.validate(employee);
-        if (violations.size() > 0) {
+    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*/ SalaryFormatException, SameEmailException, DAOException {
+        /*Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(employee);*/
+      /*  if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
         }else if (!EmailValidator.check(employee.getEmail())){
             throw new EmailFormatException(employee.getEmail());
-        }else if (employee.getSalary() < 0){
-            throw new SalaryFormatException(employee.getSalary().toString());
-        }else if(chekEmail(employee)) {
+        }else if (employee.getSalary() < 0){*/
+            /*throw new SalaryFormatException(employee.getSalary().toString());
+        }else*/ if(chekEmail(employee)) {
             throw new SameEmailException(employee.getEmail());
         }else {
             employeeDAO.addEmployee(employee);
@@ -67,8 +66,8 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
     }
 
     @Transactional
-    public void update(Employee employee) throws EmployeeNullFieldsException, EmailFormatException, SalaryFormatException, SameEmailException, DAOException {
-        Validator validator = new Validator();
+    public void update(Employee employee) throws/* EmployeeNullFieldsException, EmailFormatException, SalaryFormatException,*/ SameEmailException, DAOException {
+       /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
         if (violations.size() > 0) {
             throw new EmployeeNullFieldsException(violations);
@@ -76,7 +75,7 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
             throw new EmailFormatException(employee.getEmail());
         }else if (employee.getSalary() < 0){
             throw new SalaryFormatException(employee.getSalary().toString());
-        }else if(chekEmail(employee)) {
+        }else */if(chekEmail(employee)) {
             throw new SameEmailException(employee.getEmail());
         }else {
             employeeDAO.updateEmployee(employee);
@@ -97,7 +96,7 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
         employeeDAO.getAllEmployee();
         for(Employee chek : employeeDAO.getAll()){
             if(chek.getEmail().equals(employee.getEmail())) {
-                if(!chek.equals(employee)) {
+                if(!chek.isEquals(employee)) {
                     return true;
                 }else{
                    // employeeDAO.delete(employee);

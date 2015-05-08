@@ -4,11 +4,8 @@ import dao.DAOFactory;
 import dao.departmentDAO.DepartmentDAO;
 import dao.departmentDAO.hibernate.DepartmentHibernateImpl;
 import exception.DAOException;
-import exception.DepartmentNullNameExceptin;
 import exception.SameDepartmentNameException;
 import models.Department;
-import net.sf.oval.ConstraintViolation;
-import net.sf.oval.Validator;
 import services.DepartmentService;
 
 import java.util.List;
@@ -28,8 +25,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         return DAOs.getDeptDAO().getDepartmentById(id);
     }
 
-    public void add(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException{
-        Validator validator = new Validator();
+    public void add(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException{
+       /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
             throw new DepartmentNullNameExceptin("Department name can`t be empty");
@@ -41,11 +38,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             else{
                 DAOs.getDeptDAO().addDepartment(department);
             }
-        }
+        }*/
     }
 
-    public void update(Department department) throws SameDepartmentNameException, DepartmentNullNameExceptin, DAOException {
-        Validator validator = new Validator();
+    public void update(Department department) throws SameDepartmentNameException, /*DepartmentNullNameExceptin,*/ DAOException {
+        /*Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(department);
         if(violations.size() > 0){
             throw new DepartmentNullNameExceptin("Department name can`t be empty");
@@ -57,7 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             else{
                 DAOs.getDeptDAO().updateDepartment(department);
             }
-        }
+        }*/
     }
 
     public void delete(Department department) throws DAOException {

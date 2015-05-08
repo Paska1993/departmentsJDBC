@@ -3,7 +3,6 @@ package controllers.handlers.creators;
 import models.Employee;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Date;
 
 /**
  * Created by pavel on 22.04.15.
@@ -19,7 +18,7 @@ public class EmployeeFromRequest {
         //employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
         //employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
-        employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
+        //employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
         return employee;
     }
     public static Employee createEmployeeID(HttpServletRequest request){
@@ -38,7 +37,7 @@ public class EmployeeFromRequest {
         //employee.setSalary(NumberParser.parseDouble(request.getParameter("salary")));
         employee.setEmail(request.getParameter("email"));
        // employee.setDepartment_id(NumberParser.parseInteger(request.getParameter("department_id")));
-        employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
+       // employee.setBirthday(Date.valueOf(request.getParameter("birthday")));
         return employee;
     }
 }

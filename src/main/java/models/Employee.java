@@ -1,11 +1,19 @@
 package models;
 
-import net.sf.oval.constraint.*;
+
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import java.util.Date;
+
 
 /**
  * Created on 27.04.15.
@@ -17,31 +25,26 @@ public class Employee {
 
     private Integer id;
 
-    @NotEmpty(message = "Name: is empty")
-    @NotNull(message = "Name: is empty")
+    @Size(min=3, max=30 ,message="Field Name is empty or less then 3 characters")
     private String name;
 
-    @NotEmpty(message = "Surname: is empty")
-    @NotNull(message = "Surname: is empty")
+    @Size(min=2, max=30, message="Field Surname is empty or less then 2 characters" )
     private String surname;
 
-    @NotEmpty(message = "Salary: is empty")
+    @Min(value = 0, message = "Really, did you ever see salary less then 0?")
     @NotNull(message = "Salary: is empty")
-    @Digits(message = "Please type a valid data")
     private Double salary;
 
     @NotEmpty(message = "Address: is empty")
-    @NotNull(message = "Address: is empty")
     private String address;
 
 
-    @NotEmpty(message = "Date of birth: is empty")
     @NotNull(message = "Date of birth: is empty")
-    @Past(message = "Wrong date")
+    @Past(message = "Date must be in past time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @NotEmpty(message = "Email: is empty")
-    @NotNull(message = "Email: is empty")
     @Email(message = "Wrong Email format")
     private String email;
 
@@ -124,15 +127,10 @@ public class Employee {
         this.birthday = birthday;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean isEquals(Object o) {
         Employee employee = (Employee) o;
         return this.getId().equals(employee.getId());
 
     }
 
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
-    }
 }
