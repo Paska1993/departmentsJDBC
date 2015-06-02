@@ -36,7 +36,7 @@ public class EmployeeHibernateImpl implements EmployeeDAO {
         return employee;
     }
 
-    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
+    public List<Employee> getEmployeesByDepartmentId(Integer id) throws DAOException {
 
         Session session = null;
         List<Employee> employeeHList;
@@ -55,6 +55,7 @@ public class EmployeeHibernateImpl implements EmployeeDAO {
                 session.close();
             }
         }
+        return null;
     }
 
     public void addEmployee(Employee employee) throws DAOException {
@@ -115,7 +116,7 @@ public class EmployeeHibernateImpl implements EmployeeDAO {
         }
     }
 
-    public void getAllEmployee() throws DAOException {
+    public List<Employee> getAllEmployee() throws DAOException {
         Session session = null;
         List<Employee> employeeHList;
         try {
@@ -131,6 +132,7 @@ public class EmployeeHibernateImpl implements EmployeeDAO {
                 session.close();
             }
         }
+        return null;
     }
 
     public List<Employee> getAll() {

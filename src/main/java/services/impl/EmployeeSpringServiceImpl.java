@@ -2,7 +2,6 @@ package services.impl;
 
 import dao.employeeDAO.EmployeeDAO;
 import exception.DAOException;
-import exception.SalaryFormatException;
 import exception.SameEmailException;
 import models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +37,12 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
     }
 
     @Transactional
-    public void getByDepartmentId(Integer id) throws DAOException {
-        employeeDAO.getEmployeesByDepartmentId(id);
-        this.employees = employeeDAO.getAll();
+    public List<Employee> getByDepartmentId(Integer id) throws DAOException {
+        return employeeDAO.getEmployeesByDepartmentId(id);
     }
 
     @Transactional
-    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*/ SalaryFormatException, SameEmailException, DAOException {
+    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*/ /*SalaryFormatException,*/ SameEmailException, DAOException {
         /*Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);*/
       /*  if (violations.size() > 0) {
@@ -83,9 +81,9 @@ public class EmployeeSpringServiceImpl implements EmployeeService {
     }
 
     @Transactional
-    public void getAll() throws DAOException {
-        employeeDAO.getAllEmployee();
-        this.employees = employeeDAO.getAll();
+    public List<Employee> getAll() throws DAOException {
+        return employeeDAO.getAllEmployee();
+        //this.employees = employeeDAO.getAll();
     }
 
     public List<Employee> getList() {

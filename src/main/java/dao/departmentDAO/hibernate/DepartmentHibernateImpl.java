@@ -96,14 +96,14 @@ public class DepartmentHibernateImpl implements DepartmentDAO{
         }
     }
 
-    public void getAllDepartments() throws DAOException {
+    public List<Department> getAllDepartments() throws DAOException {
 
         Session session = null;
         List<Department> dep;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             dep = (List<Department>) session.createCriteria(Department.class).list();
-            this.department = dep;
+            return dep;
         }
         catch (Exception e) {
             throw new DAOException();

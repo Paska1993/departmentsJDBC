@@ -14,6 +14,6 @@ public interface DepartmentService {
     void add(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException;
     void update(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException;
     void delete(Department department) throws DAOException;
-    void getAll() throws DAOException;
+    List<Department> getAll() throws DAOException;
     List<Department> getList();
 }

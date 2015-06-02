@@ -1,7 +1,6 @@
 package controllers.spring.controllers;
 
 import exception.DAOException;
-import exception.SalaryFormatException;
 import exception.SameEmailException;
 import models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class EmployeeController {
         }
     }
 
-    @RequestMapping(value = "/add_form.html", method = { RequestMethod.GET})
+    @RequestMapping(value = "/add_form.html", method = RequestMethod.GET)
     public String depList(Model model) {
         try {
             departmentService.getAll();
@@ -59,7 +58,7 @@ public class EmployeeController {
         }
     }
 
-    @RequestMapping(value = "/add_employee.html", method = {RequestMethod.POST})
+    @RequestMapping(value = "/add_employee.html", method = RequestMethod.POST)
     public String add(@Valid Employee employee, BindingResult result, @RequestParam("department_id") String department_id, Model model) {
         if(result.hasErrors()){
             try {
@@ -79,17 +78,6 @@ public class EmployeeController {
             } catch (DAOException e) {
                 model.addAttribute("errorMessage", e.getDatabaseException());
                 return "error.jsp";
-            } catch (SalaryFormatException e) {
-                try {
-                    departmentService.getAll();
-                } catch (DAOException e1) {
-                    model.addAttribute("errorMessage", e1.getDatabaseException());
-                    return "error.jsp";
-                }
-                model.addAttribute("departments", departmentService.getList());
-                model.addAttribute("employee", employee);
-                model.addAttribute("salaryError", "Salary is not valid");
-                return "add_employee.jsp";
             } catch (SameEmailException e) {
                 try {
                     departmentService.getAll();

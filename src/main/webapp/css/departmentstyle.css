@@ -1,8 +1,12 @@
 .edit{
     width: 400px;
     height: 300px;
-    margin-top: 20%;
-    margin-left: 40%;
+  /*  margin-top: 20%;
+    margin-left: 40%;*/
+
+    margin-top: 0px;
+    margin-left: 30%;
+
 }
 
 .add{

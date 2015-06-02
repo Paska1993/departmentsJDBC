@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface EmployeeDAO {
     Employee getEmployeeById(Integer id) throws DAOException;
-    void getEmployeesByDepartmentId(Integer id) throws  DAOException;
+    List<Employee> getEmployeesByDepartmentId(Integer id) throws  DAOException;
     void addEmployee(Employee employee) throws DAOException;
     void deleteEmployee(Employee employee) throws DAOException;
     void updateEmployee(Employee employee) throws DAOException;
-    void getAllEmployee() throws DAOException;
+    List<Employee> getAllEmployee() throws DAOException;
     List <Employee> getAll();
 }

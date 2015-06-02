@@ -24,3 +24,17 @@ INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
 VALUES('Valera','Nochnoy',8500,'Novgorodskaia 13', 2, '1993-8-01', 'valera@gmail.com');
 INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
 VALUES('Lera','Hudiaeva',7655,'Palicheva 13', 1, '1997-8-01', 'lera@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+
+/*ROCK LEGENDS*/
+VALUES('Rudolf','Schenker',500,'Rock Land', 41, '1965-01-01', 'scorpions1@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+VALUES('Klaus','Meine',500,'Rock Land', 41, '1969-01-01', 'scorpions2@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+VALUES('Matthias','Jabs',500,'Rock Land', 41, '1978-01-01', 'scorpions3@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+VALUES('James','Kottak',500,'Rock Land', 41, '1996-01-01', 'scorpions4@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+VALUES('Pawel','Maciwoda',500,'Rock Land', 41, '2004-01-01', 'scorpions5@gmail.com');
+INSERT INTO employee(name,surname,salary,address,department_id,birthday,email)
+VALUES('Ken','Taylor',500,'Rock Land', 41, '2000-01-01', 'scorpions6@gmail.com');

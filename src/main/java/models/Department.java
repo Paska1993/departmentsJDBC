@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Set;
 @Component
 @Entity
 @Table(name = "department")
-public class Department {
+public class Department implements Serializable{
 
     private Integer id;
 
@@ -22,6 +23,10 @@ public class Department {
     private String name;
 
     private Set<Employee> employees;
+
+    public Department(Integer id) {
+        this.id = id;
+    }
 
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "department")
     public Set<Employee> getEmployees() {

@@ -12,7 +12,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -108,7 +111,7 @@ public class Employee {
     }
 
 
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="department_id")
     public Department getDepartment() {
         return department;
@@ -133,4 +136,13 @@ public class Employee {
 
     }
 
+    public void setBirthday(String birthday) {
+        SimpleDateFormat sdf = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy",
+                Locale.ENGLISH);
+        try {
+            this.birthday = sdf.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

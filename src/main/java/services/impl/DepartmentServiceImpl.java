@@ -61,8 +61,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         DAOs.getDeptDAO().deleteDepartment(department);
     }
 
-    public void getAll() throws DAOException {
+    public List<Department> getAll() throws DAOException {
             DAOs.getDeptDAO().getAllDepartments();
+        return null;
     }
 
     public List<Department> getList(){

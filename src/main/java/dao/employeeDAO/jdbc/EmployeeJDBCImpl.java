@@ -62,7 +62,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
 
 
 
-    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
+    public List<Employee> getEmployeesByDepartmentId(Integer id) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -84,6 +84,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
                 throw new DAOException();
             }
         }
+        return null;
     }
 
     public void addEmployee(Employee employee) throws DAOException {
@@ -162,7 +163,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
         }
     }
 
-    public void getAllEmployee() throws DAOException {
+    public List<Employee> getAllEmployee() throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -183,6 +184,7 @@ public class EmployeeJDBCImpl implements EmployeeDAO {
                 throw new DAOException();
             }
         }
+        return null;
     }
 
     public List<Employee> getAll() {

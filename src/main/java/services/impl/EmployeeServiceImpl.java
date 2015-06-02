@@ -4,7 +4,6 @@ import dao.DAOFactory;
 import dao.employeeDAO.EmployeeDAO;
 import dao.employeeDAO.jdbc.EmployeeJDBCImpl;
 import exception.DAOException;
-import exception.SalaryFormatException;
 import exception.SameEmailException;
 import models.Employee;
 import services.EmployeeService;
@@ -26,11 +25,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return DAOs.getEmployeeDAO().getEmployeeById(id);
     }
 
-    public void getByDepartmentId(Integer id) throws DAOException {
-        DAOs.getEmployeeDAO().getEmployeesByDepartmentId(id);
+    public List<Employee> getByDepartmentId(Integer id) throws DAOException {
+        return DAOs.getEmployeeDAO().getEmployeesByDepartmentId(id);
     }
 
-    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*/ SalaryFormatException, SameEmailException, DAOException {
+    public void add(Employee employee) throws /*EmployeeNullFieldsException, EmailFormatException,*//* SalaryFormatException, */SameEmailException, DAOException {
 
        /* Validator validator = new Validator();
         List<ConstraintViolation> violations = validator.validate(employee);
@@ -67,8 +66,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
-    public void getAll() throws DAOException {
+    public List<Employee> getAll() throws DAOException {
         DAOs.getEmployeeDAO().getAllEmployee();
+        return null;
     }
     public List <Employee> getList(){
         return DAOs.getEmployeeDAO().getAll();

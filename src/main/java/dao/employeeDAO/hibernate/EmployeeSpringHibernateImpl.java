@@ -51,7 +51,7 @@ public class EmployeeSpringHibernateImpl implements EmployeeDAO {
         return employee;
     }
 
-    public void getEmployeesByDepartmentId(Integer id) throws DAOException {
+    public List<Employee> getEmployeesByDepartmentId(Integer id) throws DAOException {
 
         Session session = null;
         List<Employee> employeeHList;
@@ -60,7 +60,7 @@ public class EmployeeSpringHibernateImpl implements EmployeeDAO {
             Query query = session.createQuery("FROM Employee WHERE department.id = :dep_id");
             query.setInteger("dep_id", id);
             employeeHList = query.list();
-            this.employees = employeeHList;
+            return employeeHList;
         }
         catch (Exception e) {
             throw new DAOException();
@@ -129,13 +129,14 @@ public class EmployeeSpringHibernateImpl implements EmployeeDAO {
         }
     }
 
-    public void getAllEmployee() throws DAOException {
+    public List<Employee> getAllEmployee() throws DAOException {
         Session session = null;
         List<Employee> employeeHList;
         try {
             session = this.sessionFactory.openSession();
             employeeHList = (List<Employee>) session.createCriteria(Employee.class).list();
-            this.employees = employeeHList;
+            //this.employees = employeeHList;
+            return employeeHList;
         }
         catch (Exception e) {
             throw new DAOException();

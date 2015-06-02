@@ -10,15 +10,6 @@
 <body>
 <div class="edit">
     <form:form name="edit" class="form-horizontal" method="post" action="department_edit.html" commandName="department">
-       <%-- <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Name: </label>
-            <div class="col-sm-10">
-                <input type="hidden" name="id" value="${requestScope.department.getId()}" >
-                <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Name"
-                        value="<c:out value="${requestScope.department.getName()}"/>"><br>
-                <p style="color: brown"> <c:out value="${errorMessage}"></c:out></p>
-            </div>
-        </div>--%>
            <div class="form-group">
                <label  class=" col-sm-2 control-label">Name: </label>
                <div class="col-sm-10">

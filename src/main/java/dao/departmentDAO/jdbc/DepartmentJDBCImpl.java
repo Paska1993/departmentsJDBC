@@ -135,7 +135,7 @@ public class DepartmentJDBCImpl implements DepartmentDAO{
         }
     }
 
-    public void getAllDepartments() throws DAOException {
+    public List<Department> getAllDepartments() throws DAOException {
         Statement statement = null;
         ResultSet resultSet = null;
         Connection connection = null;
@@ -145,9 +145,7 @@ public class DepartmentJDBCImpl implements DepartmentDAO{
             statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_QUERY);
             createDepartmentFromResultSet(resultSet);
-            resultSet.close();
-            statement.close();
-            connection.close();
+           return this.departments;
         }catch (Throwable e){
             throw new DAOException();
         }finally {

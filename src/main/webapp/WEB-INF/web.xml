@@ -16,7 +16,7 @@
 
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <context-param>

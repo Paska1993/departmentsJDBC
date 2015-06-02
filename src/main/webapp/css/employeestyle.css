@@ -1,9 +1,13 @@
 .edit{
     width: 400px;
-    margin-top: 20%;
-    margin-left: 40%;
+   /* margin-top: 20%;
+    margin-left: 40%;*/
     height: 1000px;
     float: initial;
+
+    margin-top: 0px;
+    margin-left: 30%;
+
 }
 
 .add{

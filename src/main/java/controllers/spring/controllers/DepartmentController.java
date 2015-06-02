@@ -31,8 +31,7 @@ public class DepartmentController {
     @RequestMapping(value = "/index.html", method = {RequestMethod.POST, RequestMethod.GET})
     public String index(Model model) {
         try {
-            departmentService.getAll();
-            model.addAttribute("departments", departmentService.getList() );
+            model.addAttribute("departments", departmentService.getAll() );
             return "index.jsp";
         } catch (DAOException e) {
             model.addAttribute("errorMessage",e.getDatabaseException());
@@ -104,5 +103,4 @@ public class DepartmentController {
             }
         }
     }
-
 }

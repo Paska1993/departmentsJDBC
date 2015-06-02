@@ -6,7 +6,6 @@ import exception.SameDepartmentNameException;
 import models.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import services.DepartmentService;
 
 import java.util.ArrayList;
@@ -31,60 +30,38 @@ public class DepartmentSpringServiceImpl implements DepartmentService {
         this.departments = new ArrayList<Department>();
     }
 
-    @Transactional
     public Department getById(Integer id) throws DAOException {
         return departmentDAO.getDepartmentById(id);
     }
 
-    @Transactional
-    public void add(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException {
-       /* Validator validator = new Validator();
-        List<ConstraintViolation> violations = validator.validate(department);
-        if(violations.size() > 0){
-            if(department.getName().trim().equals("") || department.getName().equals(null))
-            throw new DepartmentNullNameExceptin("Department name can`t be empty");
-            else
-                throw new DepartmentNullNameExceptin("Department name must be longer then 3 characters");
-        }
-        else{*/
+    public void add(Department department) throws SameDepartmentNameException, DAOException {
             if(isEquals(department)){
                 throw new SameDepartmentNameException("Department with this name is already exist");
             }
             else{
                 departmentDAO.addDepartment(department);
             }
-       /* }*/
+
     }
 
-    @Transactional
-    public void update(Department department) throws SameDepartmentNameException/*, DepartmentNullNameExceptin*/, DAOException {
-       /* Validator validator = new Validator();
-        List<ConstraintViolation> violations = validator.validate(department);
-        if(violations.size() > 0){
-            if(department.getName().trim().equals("") || department.getName().equals(null))
-                throw new DepartmentNullNameExceptin("Department name can`t be empty");
-            else
-                throw new DepartmentNullNameExceptin("Department name must be longer then 3 characters");
-        }
-        else{*/
+    public void update(Department department) throws SameDepartmentNameException, DAOException {
+
             if(isEquals(department)){
                 throw new SameDepartmentNameException("Department with this name is already exist");
             }
             else{
                 departmentDAO.updateDepartment(department);
             }
-       /* }*/
     }
 
-    @Transactional
     public void delete(Department department) throws DAOException {
         departmentDAO.deleteDepartment(department);
     }
 
-    @Transactional
-    public void getAll() throws DAOException {
-        departmentDAO.getAllDepartments();
-        this.departments = departmentDAO.getAll();
+
+    public List<Department> getAll() throws DAOException {
+        List<Department> dep = departmentDAO.getAllDepartments();
+        return dep;
     }
 
     public List<Department> getList() {

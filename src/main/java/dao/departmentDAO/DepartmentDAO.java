@@ -14,7 +14,7 @@ public interface DepartmentDAO {
     void addDepartment(Department department) throws DAOException;
     void deleteDepartment(Department department) throws DAOException;
     void updateDepartment(Department department) throws DAOException;
-    void getAllDepartments() throws DAOException;
+    List<Department> getAllDepartments() throws DAOException;
     List<Department> getAll();
 
 }
